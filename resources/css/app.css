@@ -25,9 +25,9 @@ body.cuerpo-sudcali {
     line-height: 1.5;
 }
 
-/* ==========================================================================
-   1. ENCABEZADO
-   ========================================================================== */
+
+ /*  1. ENCABEZADO */
+   
 .encabezado-sudcali {
     background-color: var(--color-fondo-superficie);
     border-bottom: 1px solid var(--color-borde-oscuro);
