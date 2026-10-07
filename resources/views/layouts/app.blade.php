@@ -18,7 +18,7 @@
             <nav class="navegacion-principal" aria-label="Navegación principal">
                 <ul>
                     <li><a href="/">Inicio</a></li>
-                    <li><a href="#catalogo">Catálogo</a></li>
+                   <li><a href="/catalogo">Catálogo</a></li>
                     <li><a href="#pedidos">Seguimiento de Pedidos</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
