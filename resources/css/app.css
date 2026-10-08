@@ -339,7 +339,7 @@ body.cuerpo-sudcali {
 }
 
 /* ==========================================================================
-   5. PANTALLA DE LOGIN (SUDCALI)
+   5. PANTALLA DE LOGIN 
    ========================================================================== */
 .seccion-login {
     display: flex;
@@ -461,7 +461,7 @@ body.cuerpo-sudcali {
     padding-top: 1.25rem;
 }
 /* ==========================================================================
-   6. PANTALLA DE CARRITO (SUDCALI)
+   6. PANTALLA DE CARRITO 
    ========================================================================== */
 .seccion-carrito {
     max-width: 1200px;
@@ -649,7 +649,7 @@ body.cuerpo-sudcali {
     color: var(--color-texto-principal);
 }
 /* ==========================================================================
-   7. PANTALLA DE DETALLE DE PRODUCTO (SUDCALI)
+   7. PANTALLA DE DETALLE DE PRODUCTO 
    ========================================================================== */
 .seccion-detalle-producto {
     max-width: 1200px;
@@ -863,9 +863,9 @@ body.cuerpo-sudcali {
     border-top: 1px solid var(--color-borde-oscuro);
     padding-top: 3rem;
 }
-/* ==========================================================================
-   8. PANTALLA DE CATÁLOGO COMPLETO (SUDCALI)
-   ========================================================================== */
+
+  /* 8. PANTALLA DE CATÁLOGO*/
+
 .seccion-catalogo-pagina {
     max-width: 1200px;
     margin: 0 auto;

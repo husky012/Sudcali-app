@@ -4,12 +4,19 @@
     <div class="envoltorio-tarjeta-3d">
         <!-- Cara Frontal -->
         <div class="cara-tarjeta cara-frontal">
-            <figure class="contenedor-imagen-tarjeta">
-                <img src="{{ $producto['imagen'] }}" alt="{{ $producto['nombre'] }}" class="imagen-tarjeta" loading="lazy">
-                @if(isset($producto['etiqueta']))
-                    <span class="etiqueta-pulso">{{ $producto['etiqueta'] }}</span>
-                @endif
-            </figure>
+           <figure class="contenedor-imagen-tarjeta">
+    <img 
+        src="{{ $producto['imagen'] }}" 
+        srcset="{{ $producto['imagen'] }} 500w, {{ $producto['imagen'] }} 800w"
+        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        alt="{{ $producto['nombre'] }}" 
+        class="imagen-tarjeta" 
+        loading="lazy"
+    >
+    @if(isset($producto['etiqueta']))
+        <span class="etiqueta-pulso">{{ $producto['etiqueta'] }}</span>
+    @endif
+</figure>
             <div class="cuerpo-tarjeta">
                 <h3>{{ $producto['nombre'] }}</h3>
                 <p class="precio">${{ number_format($producto['precio'], 2) }} MXN</p>
