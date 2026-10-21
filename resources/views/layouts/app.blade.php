@@ -21,6 +21,7 @@
                    <li><a href="/catalogo">Catálogo</a></li>
                     <li><a href="#pedidos">Seguimiento de Pedidos</a></li>
                     <li><a href="#contacto">Contacto</a></li>
+                    <li><a href="/empleados">Personal</a></li>
                 </ul>
             </nav>
 
@@ -48,6 +49,20 @@
             </div>
         </div>
     </footer>
+<script>
+    // Cambia la dirección por la que te genere el túnel de Cloudflare
+    const socketUrl = 'wss://career-checkout-mpeg-per.trycloudflare.com';
+    const socket = new WebSocket(socketUrl);
 
+    socket.onopen = () => console.log('Conectado al servidor de WebSockets en vivo');
+    
+    socket.onmessage = (event) => {
+        console.log('Evento recibido en tiempo real:', event.data);
+        // Si el mensaje indica que hubo un cambio en empleados o carrito, recarga los datos
+        if (typeof cargarTabla === 'function') {
+            cargarTabla();
+        }
+    };
+</script>
 </body>
 </html>

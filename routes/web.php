@@ -5,12 +5,12 @@ use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
-// Vista Inicio (Principal)
+// Vista Inicio 
 Route::get('/', function () {
     return view('inicio');
 })->name('home');
 
-// Vista Catálogo (Con filtro por categorías)
+// Vista Catálogo 
 Route::get('/catalogo', function () {
     return view('catalogo');
 })->name('catalogo');
@@ -25,14 +25,19 @@ Route::get('/carrito', function () {
     return view('carrito');
 })->name('carrito');
 
-// Vista Iniciar Sesión (Login)
+// Vista Iniciar Sesión 
 Route::get('/login', function () {
     return view('login');
 })->name('login');
-// Vista Registrarse (Registro)
+// Vista Registrarse 
 Route::get('/registro', function () {
     return view('registro');
 })->name('registro');
+
+// Vista Catálogo de Personal 
+Route::get('/empleados', function () {
+    return view('empleados');
+})->name('empleados');
 
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])
