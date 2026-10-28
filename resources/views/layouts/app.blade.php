@@ -50,8 +50,8 @@
         </div>
     </footer>
 <script>
-    // Cambia la dirección por la que te genere el túnel de Cloudflare
-    const socketUrl = 'wss://career-checkout-mpeg-per.trycloudflare.com';
+    
+    const socketUrl = 'wss://story-complement-risks-linux.trycloudflare.com';
     const socket = new WebSocket(socketUrl);
 
     socket.onopen = () => console.log('Conectado al servidor de WebSockets en vivo');
