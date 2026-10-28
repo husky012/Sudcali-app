@@ -9,37 +9,488 @@
         $categoriaActual = request('categoria', 'todos');
 
         // Arreglo maestro de productos del catálogo
+        //Playeras
         $todosLosProductos = [
             [
                 'categoria_slug' => 'playeras',
                 'nombre' => 'Playera Sudcali Clásica',
                 'precio' => 250,
-                'imagen' => 'https://scontent-qro1-1.xx.fbcdn.net/v/t51.82787-15/681050819_18346264966246782_7528669526424101271_n.jpg?stp=dst-jpg_tt6&cstp=mx899x1198&ctp=s899x1198&_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=hkBACdLiWTkQ7kNvwGZzmI1&_nc_oc=AdpphfrJVRhUtJzA5ZY7D4LYbN_rLBUb6JMHUf25XsSdZi3Gn7eTmPZFo6DRGZyFUlgjKNQnT5m-OuYzd103YZDv&_nc_zt=23&_nc_ht=scontent-qro1-1.xx&_nc_gid=OEKP16hKgV9ssCyQorGQFA&_nc_ss=7b289&oh=00_AQKyyAV_opHPOqpnvHRxsV1hXNXTeiF4N5KvRF7CR0TSKg&oe=6AB20ED4',
+                'imagen' => '/imagenes/camisas/playera_sudcali_1.jpeg',
                 'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
                 'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_2.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_3.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_4.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_5.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_6.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_7.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            [
+                'categoria_slug' => 'playeras',
+                'nombre' => 'Playera Sudcali Clásica',
+                'precio' => 250,
+                'imagen' => '/imagenes/camisas/playera_sudcali_8.jpeg',
+                'descripcion' => 'Algodón 100% premium. Diseñada localmente en La Paz. Disponible en todas las tallas.',
+                'etiqueta' => '¡Nuevo!'
+            ],
+            //Gorras
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_1.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
             ],
             [
                 'categoria_slug' => 'gorras',
                 'nombre' => 'Gorra Sudcali Delta',
                 'precio' => 650,
-                'imagen' => 'https://scontent-qro1-2.xx.fbcdn.net/v/t39.30808-6/807285053_1074182325319857_1790081506254451619_n.jpg?stp=dst-jpg_tt6&cstp=mx1280x960&ctp=s1280x960&_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_ohc=h7MxK0TNrIMQ7kNvwEH3Gbl&_nc_oc=AdrSv8RldLWak5E0U4l80RBV-BpWbUx6xg2YsqOY7-eX9cs7IjmH40GB1Ei4XdP5fb8QYWRKchr9ZM8ezwDvOq8w&_nc_zt=23&_nc_ht=scontent-qro1-2.xx&_nc_gid=UvO3iASt6kIhzafoatiiyw&_nc_ss=7b289&oh=00_AQLRxaCsqlBiLkmvJ8NqYuBZpHsgfMO4KLocuWMJUMKk8Q&oe=6AB21D76',
+                'imagen' => '/imagenes/gorras/gorra_sudcali_2.jpeg',
                 'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
                 'etiqueta' => '¡Popular!'
             ],
             [
-                'categoria_slug' => 'sudaderas',
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_3.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_4.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_5.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_6.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_7.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_8.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_9.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_10.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_11.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_12.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_14.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_15.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_16.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_17.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_18.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_19.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_20.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_21.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_22.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_23.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_24.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_25.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_26.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_27.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_28.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_29.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_30.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'gorras',
+                'nombre' => 'Gorra Sudcali Delta',
+                'precio' => 650,
+                'imagen' => '/imagenes/gorras/gorra_sudcali_31.jpeg',
+                'descripcion' => 'Ideal para el día de malecón. Corte unisex súper cómodo.',
+                'etiqueta' => '¡Popular!'
+            ],
+            [
+                'categoria_slug' => 'buff',
                 'nombre' => 'Sudadera Sudcali Urban',
                 'precio' => 850,
-                'imagen' => 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500',
+                'imagen' => '/imagenes/buff/sudcali_buff_1.jpeg',
                 'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
                 'etiqueta' => '¡Invierno!'
             ],
             [
-                'categoria_slug' => 'accesorios',
-                'nombre' => 'Llavero de Neopreno Sudcali',
-                'precio' => 120,
-                'imagen' => 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500',
-                'descripcion' => 'Llavero Flotante ideal para actividades acuáticas y marina.',
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_2.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_3.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_4.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_5.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_6.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_7.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_8.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_9.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_10.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_11.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_12.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_13.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_14.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_15.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_16.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_17.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_18.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_19.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_20.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_21.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
+            ],
+            [
+                'categoria_slug' => 'buff',
+                'nombre' => 'Sudadera Sudcali Urban',
+                'precio' => 850,
+                'imagen' => '/imagenes/buff/sudcali_buff_22.jpeg',
+                'descripcion' => 'Corte amplio oversize, gorro térmico y bolsa frontal.',
+                'etiqueta' => '¡Invierno!'
             ]
         ];
 
@@ -65,12 +516,8 @@
         <a href="/catalogo?categoria=gorras" class="boton-filtro {{ $categoriaActual === 'gorras' ? 'activo' : '' }}">
             Gorras
         </a>
-        <a href="/catalogo?categoria=sudaderas" class="boton-filtro {{ $categoriaActual === 'sudaderas' ? 'activo' : '' }}">
-            Sudaderas
-        </a>
-        <a href="/catalogo?categoria=accesorios" class="boton-filtro {{ $categoriaActual === 'accesorios' ? 'activo' : '' }}">
-            Accesorios
-        </a>
+        <a href="/catalogo?categoria=buff" class="boton-filtro {{ $categoriaActual === 'buff' ? 'activo' : '' }}">
+            Buff
     </nav>
 
     <!-- Rejilla de Productos con Componente Reutilizable -->

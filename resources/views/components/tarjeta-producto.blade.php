@@ -20,7 +20,8 @@
             <div class="cuerpo-tarjeta">
                 <h3>{{ $producto['nombre'] }}</h3>
                 <p class="precio">${{ number_format($producto['precio'], 2) }} MXN</p>
-                <p class="indicacion">Pasa el cursor o usa Tab para girar</p>
+                <!-- Texto universal para escritorio y móvil -->
+                <p class="indicacion">Toca o pasa el cursor para girar</p>
             </div>
         </div>
 
