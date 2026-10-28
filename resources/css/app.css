@@ -1,6 +1,6 @@
-
-/*   ESTILOS GENERALES Y PALETA DE COLORES */
-  
+/* ==========================================================================
+   ESTILOS GENERALES Y PALETA DE COLORES
+   ========================================================================== */
 :root {
     --color-fondo-principal: #0a0a0a;
     --color-fondo-superficie: #121212;
@@ -11,13 +11,12 @@
     --color-foco-teclado: #3b82f6;
     --color-borde-oscuro: #2a2a2a;
    
-    --espacio-1: 0.5rem;   /* 8px */
-    --espacio-2: 1rem;     /* 16px */
-    --espacio-3: 1.5rem;   /* 24px */
-    --espacio-4: 2.5rem;   /* 40px */
+    --espacio-1: 0.5rem;
+    --espacio-2: 1rem;
+    --espacio-3: 1.5rem;
+    --espacio-4: 2.5rem;
     --radio-borde: 12px;
 
-   
     --tipo-titulo: clamp(1.6rem, 4vw, 2.5rem);
     --tipo-subtitulo: clamp(1.1rem, 2.5vw, 1.5rem);
 }
@@ -35,9 +34,9 @@ body.cuerpo-sudcali {
     line-height: 1.5;
 }
 
-
- /*  1. ENCABEZADO */
-   
+/* ==========================================================================
+   1. ENCABEZADO PRINCIPAL Y MENÚ LATERAL (OFF-CANVAS)
+   ========================================================================== */
 .encabezado-sudcali {
     background-color: var(--color-fondo-superficie);
     border-bottom: 1px solid var(--color-borde-oscuro);
@@ -66,55 +65,146 @@ body.cuerpo-sudcali {
     text-decoration: none;
 }
 
-.navegacion-principal ul {
+/* Acciones a la derecha */
+.acciones-encabezado {
     display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+/* Botón de Carrito con Ícono */
+.boton-carrito-icono {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-texto-principal);
+    text-decoration: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.boton-carrito-icono:hover {
+    background-color: var(--color-fondo-tarjeta);
+}
+
+.contador-carrito {
+    background-color: var(--color-acento);
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 10px;
+}
+
+/* Botón Hamburguesa */
+.boton-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-texto-principal);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.boton-menu:hover {
+    background-color: var(--color-fondo-tarjeta);
+}
+
+/* Menú Panel Lateral Oculto a la Derecha */
+.navegacion-principal {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Escondido fuera de la pantalla por la derecha */
+    width: 280px;
+    height: 100vh;
+    background-color: var(--color-fondo-superficie);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Animación suave al deslizar */
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Clase que lo activa e ingresa a la pantalla */
+.navegacion-principal.activo {
+    right: 0;
+}
+
+.boton-cerrar-menu {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--color-texto-principal);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.navegacion-principal ul {
     list-style: none;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
+    padding: 0;
+    margin: 0;
 }
 
 .navegacion-principal a {
     color: var(--color-texto-secundario);
     text-decoration: none;
+    font-size: 1.1rem;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
+    display: block;
 }
 
-.navegacion-principal a:hover,
-.navegacion-principal a:focus {
+.navegacion-principal a:hover {
     color: var(--color-acento);
 }
 
-.acciones-encabezado {
-    display: flex;
-    gap: 1rem;
+.separador-menu {
+    height: 1px;
+    background-color: var(--color-borde-oscuro);
+    margin: 0.5rem 0;
 }
 
-.boton-principal, .boton-secundario, .boton-banner, .boton-agregar-carrito {
-    padding: 0.5rem 1.25rem;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-block;
-    border: none;
+.enlace-login-menu {
+    color: var(--color-acento) !important;
+    font-weight: 600 !important;
 }
 
-.boton-principal, .boton-banner, .boton-agregar-carrito {
-    background-color: var(--color-acento);
-    color: #000;
+/* Overlay Oscuro */
+.fondo-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.boton-secundario {
-    background-color: transparent;
-    color: var(--color-texto-principal);
-    border: 1px solid var(--color-borde-oscuro);
+.fondo-menu-overlay.activo {
+    opacity: 1;
+    visibility: visible;
 }
 
-
-   /* 2. CONTENIDO PRINCIPAL Y BANNER*/
- 
+/* ==========================================================================
+   2. CONTENIDO PRINCIPAL
+   ========================================================================== */
 .principal-sudcali {
-   max-width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: var(--espacio-3);
     min-height: 80dvh;
@@ -140,9 +230,9 @@ body.cuerpo-sudcali {
     font-size: 1.1rem;
 }
 
-
-   /*3. SECCIÓN DE CATÁLOGO & COMPONENTE ANIMADO 3D */
-
+/* ==========================================================================
+   3. SECCIÓN DE CATÁLOGO & COMPONENTE ANIMADO 3D
+   ========================================================================== */
 .encabezado-seccion {
     text-align: center;
     margin-bottom: 2.5rem;
@@ -150,21 +240,22 @@ body.cuerpo-sudcali {
 
 .cuadricula-productos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
     justify-content: center;
+    padding: 0 1rem;
 }
 
-/*Perspectiva 3D */
 .contenedor-tarjeta-producto {
-    width: 300px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
     height: 420px;
-    perspective: 1000px; /* Perspectiva tridimensional */
+    perspective: 1000px; 
     outline: none;
     cursor: pointer;
 }
 
-/* Indicador de foco visible*/
 .contenedor-tarjeta-producto:focus-visible {
     outline: 3px solid var(--color-foco-teclado);
     outline-offset: 6px;
@@ -176,13 +267,12 @@ body.cuerpo-sudcali {
     height: 100%;
     position: relative;
     transform-style: preserve-3d; 
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); /* Transición 1 */
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/*Disparadores :hover y :focus */
 .contenedor-tarjeta-producto:hover .envoltorio-tarjeta-3d,
 .contenedor-tarjeta-producto:focus .envoltorio-tarjeta-3d {
-    transform: rotateY(180deg) scale(1.02); /* Transformaciones 2D (scale) y 3D (rotateY) */
+    transform: rotateY(180deg) scale(1.02);
 }
 
 .cara-tarjeta {
@@ -235,7 +325,6 @@ body.cuerpo-sudcali {
     margin-top: 0.5rem;
 }
 
-/* Cara Trasera (Giro 3D) */
 .cara-trasera {
     transform: rotateY(180deg);
     padding: 2rem;
@@ -250,20 +339,10 @@ body.cuerpo-sudcali {
     font-size: 0.95rem;
 }
 
-/*Animación @keyframes de 3 pasos con animation-fill-mode */
 @keyframes pulsoEtiqueta {
-    0% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.15);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0.9;
-    }
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.9; }
 }
 
 .etiqueta-pulso {
@@ -276,15 +355,12 @@ body.cuerpo-sudcali {
     font-size: 0.75rem;
     font-weight: 700;
     border-radius: 20px;
-    animation-name: pulsoEtiqueta;
-    animation-duration: 2.5s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: forwards; 
+    animation: pulsoEtiqueta 2.5s infinite forwards;
 }
 
-
-  /* 4. PIE DE PÁGINA*/
-  
+/* ==========================================================================
+   4. PIE DE PÁGINA
+   ========================================================================== */
 .pie-pagina-sudcali {
     background-color: var(--color-fondo-superficie);
     border-top: 1px solid var(--color-borde-oscuro);
@@ -312,30 +388,12 @@ body.cuerpo-sudcali {
     font-size: 0.8rem;
 }
 
-
-  /* VARIANTE MOVIMIENTO REDUCIDO */
-
 @media (prefers-reduced-motion: reduce) {
-    .envoltorio-tarjeta-3d {
-        transition: none !important;
-    }
-
+    .envoltorio-tarjeta-3d { transition: none !important; }
     .contenedor-tarjeta-producto:hover .envoltorio-tarjeta-3d,
-    .contenedor-tarjeta-producto:focus .envoltorio-tarjeta-3d {
-        transform: none !important;
-    }
-
-    .etiqueta-pulso {
-        animation: none !important;
-    }
-
-    .cara-trasera {
-        position: relative;
-        transform: none;
-        border-top: 1px solid var(--color-borde-oscuro);
-    }
-
-    
+    .contenedor-tarjeta-producto:focus .envoltorio-tarjeta-3d { transform: none !important; }
+    .etiqueta-pulso { animation: none !important; }
+    .cara-trasera { position: relative; transform: none; border-top: 1px solid var(--color-borde-oscuro); }
 }
 
 /* ==========================================================================
@@ -460,6 +518,7 @@ body.cuerpo-sudcali {
     border-top: 1px solid var(--color-borde-oscuro);
     padding-top: 1.25rem;
 }
+
 /* ==========================================================================
    6. PANTALLA DE CARRITO 
    ========================================================================== */
@@ -579,7 +638,6 @@ body.cuerpo-sudcali {
     cursor: pointer;
 }
 
-/* Tarjeta del Resumen de Compra */
 .resumen-pedido {
     background-color: var(--color-fondo-tarjeta);
     border: 1px solid var(--color-borde-oscuro);
@@ -648,6 +706,7 @@ body.cuerpo-sudcali {
 .enlace-seguir-comprando:hover {
     color: var(--color-texto-principal);
 }
+
 /* ==========================================================================
    7. PANTALLA DE DETALLE DE PRODUCTO 
    ========================================================================== */
@@ -684,7 +743,6 @@ body.cuerpo-sudcali {
     }
 }
 
-/* Galería */
 .galeria-producto {
     display: flex;
     flex-direction: column;
@@ -736,7 +794,6 @@ body.cuerpo-sudcali {
     object-fit: cover;
 }
 
-/* Info Producto */
 .info-producto-detalle {
     display: flex;
     flex-direction: column;
@@ -768,7 +825,6 @@ body.cuerpo-sudcali {
     margin-bottom: 2rem;
 }
 
-/* Tallas & Formulario */
 .grupo-seleccion {
     margin-bottom: 1.5rem;
 }
@@ -864,14 +920,14 @@ body.cuerpo-sudcali {
     padding-top: 3rem;
 }
 
-  /* 8. PANTALLA DE CATÁLOGO*/
-
+/* ==========================================================================
+   8. PANTALLA DE CATÁLOGO
+   ========================================================================== */
 .seccion-catalogo-pagina {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Barra de Botones de Filtro */
 .barra-categorias-catalogo {
     display: flex;
     justify-content: center;
@@ -903,7 +959,6 @@ body.cuerpo-sudcali {
     border-color: var(--color-acento);
 }
 
-/* Estado Vacío */
 .mensaje-catalogo-vacio {
     text-align: center;
     padding: 4rem 2rem;
