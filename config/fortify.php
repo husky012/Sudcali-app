@@ -76,6 +76,15 @@ return [
     'home' => '/dashboard',
 
     /*
+    | Al cerrar sesión, los clientes regresan a la tienda en línea
+    | (la raíz "/" ahora abre el login del punto de venta).
+    */
+
+    'redirects' => [
+        'logout' => '/tienda',
+    ],
+
+    /*
     |--------------------------------------------------------------------------
     | Fortify Routes Prefix / Subdomain
     |--------------------------------------------------------------------------

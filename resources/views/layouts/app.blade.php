@@ -4,68 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('titulo', 'Sudcali - Tienda en Línea & Punto de Venta | La Paz, B.C.S.')</title>
+    
+    <!-- Permite cargar imágenes y estilos HTTPS a través del túnel sin bloqueos -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    
     @vite(['resources/css/app.css'])
 </head>
-<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
 <body class="cuerpo-sudcali">
 
-   <!-- 1. ENCABEZADO PRINCIPAL -->
-<header class="encabezado-sudcali">
-    <div class="contenedor-encabezado">
-        <!-- Logotipo a la izquierda -->
-        <a href="/" class="logotipo-marca">
-            <h1>SUDCALI</h1>
-        </a>
-        
-        <!-- Acciones del lado derecho (Carrito e Ícono de Menú) -->
-        <div class="acciones-encabezado">
-            <!-- Ícono de Carrito con badge/contador -->
-            <a href="/carrito" class="boton-carrito-icono" aria-label="Carrito de compras">
-                <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-                <span class="contador-carrito">0</span>
+    <!-- 1. ENCABEZADO PRINCIPAL -->
+    <header class="encabezado-sudcali">
+        <div class="contenedor-encabezado">
+            <!-- Logotipo a la izquierda -->
+            <a href="{{ route('home') }}" class="logotipo-marca">
+                <h1>SUDCALI</h1>
             </a>
-
-            <!-- Botón de tres líneas (Hamburguesa) -->
-            <button id="botonMenu" class="boton-menu" aria-label="Abrir menú">
-                <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Menú Lateral Desplegable (Off-Canvas) -->
-        <nav id="menuPrincipal" class="navegacion-principal" aria-label="Navegación principal">
-            <!-- Botón para cerrar (X) -->
-            <button id="botonCerrar" class="boton-cerrar-menu" aria-label="Cerrar menú">&times;</button>
             
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/catalogo">Catálogo</a></li>
-                <li><a href="#pedidos">Seguimiento de Pedidos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-                <li><a href="/empleados">Personal</a></li>
-                <li class="separador-menu"></li>
-                <li><a href="/login" class="enlace-login-menu">Iniciar Sesión</a></li>
-            </ul>
-        </nav>
+            <!-- Acciones del lado derecho (Carrito e Ícono de Menú) -->
+            <div class="acciones-encabezado">
+                <!-- Ícono de Carrito con badge/contador -->
+                <a href="{{ route('carrito') }}" class="boton-carrito-icono" aria-label="Carrito de compras: {{ $cantidadCarrito }} {{ $cantidadCarrito === 1 ? 'pieza' : 'piezas' }}">
+                    <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="contador-carrito">{{ $cantidadCarrito }}</span>
+                </a>
 
-        <!-- Fondo oscuro semitransparente al abrir el menú -->
-        <div id="fondoMenu" class="fondo-menu-overlay"></div>
-    </div>
-</header>
+                <!-- Botón de tres líneas (Hamburguesa) -->
+                <button id="botonMenu" class="boton-menu" aria-label="Abrir menú">
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Menú Lateral Desplegable (Off-Canvas) -->
+            <nav id="menuPrincipal" class="navegacion-principal" aria-label="Navegación principal">
+                <!-- Botón para cerrar (X) -->
+                <button id="botonCerrar" class="boton-cerrar-menu" aria-label="Cerrar menú">&times;</button>
+                
+                <ul>
+                    <li><a href="{{ route('home') }}">Inicio</a></li>
+                    <li><a href="{{ route('catalogo') }}">Catálogo</a></li>
+                    <li><a href="{{ route('carrito') }}">Carrito ({{ $cantidadCarrito }})</a></li>
+                    <li><a href="{{ route('pedidos.index') }}">Mis pedidos</a></li>
+                    <li><a href="/empleados">Personal</a></li>
+                    <li class="separador-menu"></li>
+                    @if ($clienteActual)
+                        <li class="saludo-cliente-menu">Hola, {{ $clienteActual->nombre }}</li>
+                        <li>
+                            <form method="POST" action="{{ route('tienda.logout') }}">
+                                @csrf
+                                <button type="submit" class="enlace-login-menu boton-enlace-menu">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="{{ route('login') }}" class="enlace-login-menu">Iniciar Sesión</a></li>
+                        <li><a href="{{ route('registro') }}">Crear cuenta</a></li>
+                    @endif
+                </ul>
+            </nav>
+
+            <!-- Fondo oscuro semitransparente al abrir el menú -->
+            <div id="fondoMenu" class="fondo-menu-overlay"></div>
+        </div>
+    </header>
 
     <!-- 2. CONTENIDO DINÁMICO DE LAS VISTAS -->
     <main class="principal-sudcali" id="inicio">
+        @if (session('exito'))
+            <p class="alerta-pos alerta-exito alerta-tienda" role="status">{{ session('exito') }}</p>
+        @endif
+
+        @if (session('aviso'))
+            <p class="alerta-pos alerta-aviso alerta-tienda" role="status">{{ session('aviso') }}</p>
+        @endif
+
         @yield('contenido')
     </main>
 
-    <!-- 3. PIE DE PÁGINA  -->
+    <!-- 3. PIE DE PÁGINA -->
     <footer class="pie-pagina-sudcali">
         <div class="contenedor-pie-pagina">
             <div class="marca-pie-pagina">
@@ -77,18 +99,11 @@
             </div>
         </div>
     </footer>
-<<<<<<< HEAD
-<script>
-    
-    const socketUrl = 'wss://story-complement-risks-linux.trycloudflare.com';
-    const socket = new WebSocket(socketUrl);
-=======
->>>>>>> 68e3bf859c35386f5e8d2e59fa6e0d00241d0e0c
 
     <!-- SCRIPTS -->
     <script>
-        // Websockets
-        const socketUrl = 'wss://worked-tons-everywhere-additions.trycloudflare.com';
+        // WebSocket: Coloca aquí la URL que te arroje la terminal del túnel del PUERTO 3000
+        const socketUrl = 'wss://cats-accompanying-maybe-becomes.trycloudflare.com';
         const socket = new WebSocket(socketUrl);
 
         socket.onopen = () => console.log('Conectado al servidor de WebSockets en vivo');
@@ -122,5 +137,7 @@
             if (fondoMenu) fondoMenu.addEventListener('click', cerrarMenu);
         });
     </script>
+
+    @stack('scripts')
 </body>
 </html>

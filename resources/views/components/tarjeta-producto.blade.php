@@ -1,37 +1,44 @@
-@props(['producto'])
+@props(['producto', 'etiqueta' => null])
 
-<article class="contenedor-tarjeta-producto" tabindex="0" aria-label="Tarjeta de producto: {{ $producto['nombre'] }}">
-    <div class="envoltorio-tarjeta-3d">
-        <!-- Cara Frontal -->
-        <div class="cara-tarjeta cara-frontal">
-           <figure class="contenedor-imagen-tarjeta">
-    <img 
-        src="{{ $producto['imagen'] }}" 
-        srcset="{{ $producto['imagen'] }} 500w, {{ $producto['imagen'] }} 800w"
-        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        alt="{{ $producto['nombre'] }}" 
-        class="imagen-tarjeta" 
-        loading="lazy"
-    >
-    @if(isset($producto['etiqueta']))
-        <span class="etiqueta-pulso">{{ $producto['etiqueta'] }}</span>
-    @endif
-</figure>
-            <div class="cuerpo-tarjeta">
-                <h3>{{ $producto['nombre'] }}</h3>
-                <p class="precio">${{ number_format($producto['precio'], 2) }} MXN</p>
-                <!-- Texto universal para escritorio y móvil -->
-                <p class="indicacion">Toca o pasa el cursor para girar</p>
+@php($agotado = (int) ($producto->inventario_sum_stock ?? 1) === 0)
+
+{{-- La tarjeta crece al pasar el cursor, al enfocarla con teclado o al tocarla, y despliega la información. --}}
+<div class="contenedor-tarjeta-producto">
+    <article class="tarjeta-producto" tabindex="0" aria-label="{{ $producto->titulo }}, ${{ number_format($producto->precio, 2) }} MXN">
+        <figure class="contenedor-imagen-tarjeta">
+            @if ($producto->imagen)
+                <img
+                    src="{{ $producto->imagen }}"
+                    alt="{{ $producto->titulo }}"
+                    class="imagen-tarjeta"
+                    loading="lazy"
+                >
+            @endif
+            @if ($agotado)
+                <span class="etiqueta-pulso etiqueta-agotado">Agotado</span>
+            @elseif ($etiqueta)
+                <span class="etiqueta-pulso">{{ $etiqueta }}</span>
+            @endif
+        </figure>
+
+        <div class="cuerpo-tarjeta">
+            <h3>{{ $producto->titulo }}</h3>
+            <p class="precio">${{ number_format($producto->precio, 2) }} MXN</p>
+            <p class="indicacion" aria-hidden="true">Toca o pasa el cursor para ver más</p>
+
+            <div class="info-extra-tarjeta">
+                <div class="contenido-extra-tarjeta">
+                    @if ($producto->categoria)
+                        <span class="categoria-tarjeta">{{ $producto->categoria->nombre }}</span>
+                    @endif
+                    @if ($producto->descripcion)
+                        <p class="descripcion">{{ $producto->descripcion }}</p>
+                    @endif
+                    <a href="{{ route('producto.detalle', $producto) }}" class="boton-agregar-carrito">
+                        {{ $agotado ? 'Ver detalle' : 'Elegir talla y comprar' }}
+                    </a>
+                </div>
             </div>
         </div>
-
-        <!-- Cara Trasera (Giro 3D) -->
-        <div class="cara-tarjeta cara-trasera">
-            <h3>{{ $producto['nombre'] }}</h3>
-            <p class="descripcion">{{ $producto['descripcion'] }}</p>
-            <div class="accion-pie-tarjeta">
-                <button type="button" class="boton-agregar-carrito">Añadir al Carrito</button>
-            </div>
-        </div>
-    </div>
-</article>
+    </article>
+</div>

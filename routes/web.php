@@ -5,36 +5,11 @@ use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
-// Vista Inicio 
-Route::get('/', function () {
-    return view('inicio');
-})->name('home');
+// La aplicación siempre arranca en el login del punto de venta
+// (si el empleado ya tiene sesión, el login lo manda directo a vender).
+Route::redirect('/', '/pos/login');
 
-// Vista Catálogo 
-Route::get('/catalogo', function () {
-    return view('catalogo');
-})->name('catalogo');
-
-// Vista Detalle de Producto
-Route::get('/producto/1', function () {
-    return view('producto-detalle');
-})->name('producto.detalle');
-
-// Vista Carrito de Compras
-Route::get('/carrito', function () {
-    return view('carrito');
-})->name('carrito');
-
-// Vista Iniciar Sesión 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-// Vista Registrarse 
-Route::get('/registro', function () {
-    return view('registro');
-})->name('registro');
-
-// Vista Catálogo de Personal 
+// Vista Catálogo de Personal
 Route::get('/empleados', function () {
     return view('empleados');
 })->name('empleados');
@@ -51,3 +26,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+require __DIR__.'/tienda.php';
+require __DIR__.'/pos.php';

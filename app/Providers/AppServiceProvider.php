@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Actions\Tienda\Carrito;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +26,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->compartirDatosDeLaTienda();
+    }
+
+    /**
+     * El encabezado de la tienda necesita el contador del carrito y al cliente en sesión.
+     */
+    protected function compartirDatosDeLaTienda(): void
+    {
+        View::composer('layouts.app', function (\Illuminate\View\View $vista): void {
+            $vista->with([
+                'cantidadCarrito' => app(Carrito::class)->contarPiezas(),
+                'clienteActual' => auth('cliente')->user(),
+            ]);
+        });
     }
 
     /**
