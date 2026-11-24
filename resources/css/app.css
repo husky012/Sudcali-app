@@ -3183,3 +3183,11 @@ a.boton-finalizar-compra {
         padding: 0;
     }
 }
+/* 13. Seguridad: campo trampa del registro (anti-bots) */
+.campo-trampa {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}

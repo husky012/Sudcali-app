@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tienda;
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 use App\Models\Venta;
+use App\Support\BitacoraSeguridad;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -28,7 +29,14 @@ class PedidoController extends Controller
      */
     public function show(Request $request, Venta $pedido): View
     {
-        abort_unless($pedido->cliente_id === $request->user('cliente')->id, 404);
+        if ($pedido->cliente_id !== $request->user('cliente')->id) {
+            BitacoraSeguridad::registrar('pedido_ajeno', [
+                'cliente_id' => $request->user('cliente')->id,
+                'pedido_id' => $pedido->id,
+            ]);
+
+            abort(404);
+        }
 
         $pedido->load(['detalles.inventario.producto', 'direccionEnvio']);
 

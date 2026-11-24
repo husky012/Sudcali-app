@@ -52,7 +52,9 @@
                     <li><a href="{{ route('catalogo') }}">Catálogo</a></li>
                     <li><a href="{{ route('carrito') }}">Carrito ({{ $cantidadCarrito }})</a></li>
                     <li><a href="{{ route('pedidos.index') }}">Mis pedidos</a></li>
-                    <li><a href="/empleados">Personal</a></li>
+                    @if (auth('empleado')->user()?->puesto->puedeAdministrar())
+                        <li><a href="{{ route('empleados') }}">Personal</a></li>
+                    @endif
                     <li class="separador-menu"></li>
                     @if ($clienteActual)
                         <li class="saludo-cliente-menu">Hola, {{ $clienteActual->nombre }}</li>
@@ -102,19 +104,6 @@
 
     <!-- SCRIPTS -->
     <script>
-        // WebSocket: Coloca aquí la URL que te arroje la terminal del túnel del PUERTO 3000
-        const socketUrl = 'wss://cats-accompanying-maybe-becomes.trycloudflare.com';
-        const socket = new WebSocket(socketUrl);
-
-        socket.onopen = () => console.log('Conectado al servidor de WebSockets en vivo');
-        
-        socket.onmessage = (event) => {
-            console.log('Evento recibido en tiempo real:', event.data);
-            if (typeof cargarTabla === 'function') {
-                cargarTabla();
-            }
-        };
-
         // Control del menú hamburguesa
         document.addEventListener('DOMContentLoaded', () => {
             const botonMenu = document.getElementById('botonMenu');

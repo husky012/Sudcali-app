@@ -63,6 +63,19 @@
             </div>
             @include('pos.partials.campo-error', ['campo' => 'terminos'])
 
+            <div class="grupo-campo">
+                <label for="captcha">Verificación: {{ $preguntaCaptcha }} *</label>
+                <input type="text" id="captcha" name="captcha" inputmode="numeric" pattern="[0-9]*" maxlength="3" required autocomplete="off" placeholder="Escribe el resultado">
+                @include('pos.partials.campo-error', ['campo' => 'captcha'])
+            </div>
+
+            {{-- Campo trampa contra bots: oculto para personas y lectores de pantalla --}}
+            <div class="campo-trampa" aria-hidden="true">
+                <label for="sitio_web">No llenes este campo</label>
+                <input type="text" id="sitio_web" name="sitio_web" tabindex="-1" autocomplete="off">
+            </div>
+            @include('pos.partials.campo-error', ['campo' => 'sitio_web'])
+
             <button type="submit" class="boton-login">Crear mi cuenta</button>
         </form>
 

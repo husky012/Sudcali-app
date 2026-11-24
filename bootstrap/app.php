@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CabecerasSeguridad;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SetTeamUrlDefaults;
@@ -19,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->redirectGuestsTo(
-            fn (Request $request) => $request->is('pos', 'pos/*') ? route('pos.login') : route('login'),
+            fn (Request $request) => $request->is('pos', 'pos/*', 'empleados') ? route('pos.login') : route('login'),
         );
 
         $middleware->web(append: [
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             SetTeamUrlDefaults::class,
+            CabecerasSeguridad::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -1,62 +1,100 @@
 # Superficies de ataque — Sudcali
 
-## Alcance
+Equipo: Jorge Eduardo Alvarez Aviles, Logan Ransseth Rios Manriquez, Omar Alberto Rios Aviles
 
-Análisis estático del código del proyecto. Las medidas descritas son propuestas y todavía no se han implementado ni comprobado mediante pruebas de seguridad. Las categorías corresponden al Top 10 de OWASP 2025.
+Sudcali es una tienda en línea con punto de venta (POS) para ropa local de La Paz, B.C.S. Está hecha en Laravel 13 y PHP 8.5. Las categorías son las del Top 10 de OWASP 2025. Cada medida marcada como aplicada tiene una prueba automática en `tests/Feature`. Se comprueban con `php artisan test --compact`.
 
 ## Entradas del sistema
 
-- `/login`: formulario de correo y contraseña. La vista Blade tiene `action="#"`; también existe configuración de autenticación con Fortify, por lo que se debe comprobar qué pantalla queda registrada y cómo se conecta al inicio de sesión.
-- `/registro`: formulario de nombre, correo, contraseña y confirmación. Actualmente tiene `action="#"` y el registro no está habilitado en las características de Fortify.
-- Recuperación y restablecimiento de contraseña: correo, token y contraseña nueva, mediante la funcionalidad habilitada de Fortify.
-- `/empleados`: formulario de nombre, correo, puesto, sucursal, estatus, fecha de contratación y fotografía; incluye búsqueda por puesto y operaciones de edición y eliminación.
-- Selector de fotografía: recibe archivos del dispositivo y los guarda como parte del registro local del empleado.
-- IndexedDB: almacena y devuelve registros de empleados controlados desde el navegador. Sus datos deben tratarse como entradas no confiables al mostrarlos.
-- WebSocket: recibe conexiones y mensajes externos en `server-socket.js`; el navegador se conecta a una dirección WSS configurada en la plantilla.
-- `/{current_team}/dashboard`: recibe el identificador del equipo en la dirección.
-- `/settings/profile` y `/settings/password`: reciben cambios de datos personales, contraseña actual y contraseña nueva; la eliminación de cuenta recibe confirmación de contraseña.
-- `/settings/teams` y `/settings/teams/{team}`: reciben nombres e identificadores de equipos y solicitudes para actualizar, eliminar, cambiar o abandonar equipos.
-- `/settings/teams/{team}/members/{user}`: recibe identificadores de equipo y usuario, y cambios de rol o solicitudes de eliminación.
-- `/settings/teams/{team}/invitations`: recibe correo y rol del destinatario. Las rutas de cancelación, aceptación y rechazo reciben el identificador de la invitación.
-- Cookies y sesión: reciben el identificador de sesión y preferencias del navegador.
-- `/catalogo`, `/producto/1` y `/carrito`: son vistas públicas. En el código revisado no se identificó un endpoint de pago ni de creación de pedidos; esas funciones deberán analizarse cuando se implementen.
+**Acceso**
+- `/login`: pestañas Cliente y Empleado. Cliente envía correo, contraseña y "recordarme" a `POST /tienda/login`. Empleado envía lo mismo a `POST /pos/login`.
+- `/registro`: nombre, apellidos, teléfono, correo, contraseña y su confirmación, aceptación de términos, captcha y campo trampa.
+- Cookies de sesión y "recordarme" de los guards `cliente`, `empleado` y `web`.
+
+**Tienda en línea (pública y de clientes)**
+- `/catalogo`: búsqueda `buscar` y filtro `categoria` en la URL.
+- `/producto/{slug}`: el slug del producto.
+- `/carrito`:
+  - `POST` con `inventario_id` y `cantidad`;
+  - `PATCH` y `DELETE /carrito/{variante}`.
+- `POST /checkout`: dirección guardada o nueva (calle, colonia, C.P., referencias) y método de pago.
+- `/mis-pedidos/{pedido}`: identificador numérico del pedido.
+
+**Punto de venta (solo empleados)**
+- `POST /pos/caja` y `PUT /pos/caja`: fondo inicial y efectivo contado al cerrar caja.
+- `POST /pos/ventas`: renglones (`inventario_id`, cantidad), método de pago y efectivo recibido.
+- `/pos/inventario`: búsqueda por texto o código de barras al vender.
+- `/pos/ventas/{venta}` y `/pos/cortes/{corte}`: identificadores de ticket y de corte.
+- Administración:
+  - empleados, con fotografía;
+  - categorías y productos, con imagen;
+  - variantes (talla, color, código de barras);
+  - ajustes de inventario;
+  - estado de pedidos en línea.
+- `/pos/admin/estadisticas` y `/exportar/{reporte}`: periodo, fechas, canal y tipo de reporte.
+- `/empleados`: catálogo de personal en IndexedDB:
+  - formulario con fotografía;
+  - búsqueda por puesto;
+  - los datos guardados en el navegador, que se tratan como no confiables.
+- WebSocket (`server-socket.js`): conexiones y mensajes externos.
+
+**Kit de inicio (Fortify, equipos y ajustes)**
+- Recuperación de contraseña.
+- `/settings/profile` y `/settings/password`.
+- `/settings/teams/{team}`, con sus miembros e invitaciones.
+- `/{current_team}/dashboard`.
 
 ## Las tres más expuestas
 
-| Superficie | Categoría | Qué podría pasar | Medida |
+| Superficie | Categoría | Qué podría pasar | Medida aplicada |
 | --- | --- | --- | --- |
-| Acceso al módulo `/empleados` y a sus registros locales | A01: Control de acceso roto | Un visitante puede abrir la interfaz sin iniciar sesión. En un navegador compartido podría consultar, modificar o eliminar los registros guardados allí. | Exigir autenticación y permisos de administración. Para datos reales, almacenar los empleados en el servidor y autorizar cada operación con políticas. Retirar la página privada de la caché y limpiar los datos locales al cerrar sesión. |
-| Campos de empleados insertados en la tabla mediante `innerHTML` | A05: Inyección, específicamente XSS | Un valor manipulado puede interpretarse como HTML o JavaScript al renderizar una fila, comprometiendo los datos y acciones accesibles desde esa página. | Crear los elementos con `createElement`, colocar los valores de texto con `textContent` y validar por separado las direcciones de imágenes. No interpolar entradas del usuario en HTML ni en manejadores de eventos. |
-| Conexiones y mensajes del servidor WebSocket | A01: Control de acceso roto | Si el servicio es accesible, un tercero podría enviar eventos falsos o recibir mensajes retransmitidos globalmente. El envío repetido también puede consumir recursos. | Autenticar cada conexión, autorizar los mensajes por equipo, comprobar el origen permitido y validar el esquema de los eventos. Limitar tamaño, frecuencia y número de conexiones, manteniendo WSS. |
+| Inicio de sesión (cliente y empleado) y `/registro` | A07: Fallas de autenticación | Un atacante podría probar contraseñas sin límite hasta entrar al POS. También podría crear cuentas falsas en masa con un bot. | Bloqueo tras 5 intentos fallidos por correo e IP, con un mensaje genérico que no revela si el correo existe. En el registro: captcha propio de un solo uso, campo trampa y límite de 5 registros por minuto y 20 por día por IP. Contraseñas con bcrypt. |
+| `POST /checkout` y `/mis-pedidos/{pedido}` | A01: Control de acceso roto | Cambiar el número en la URL para ver pedidos, direcciones y teléfonos de otros clientes. Enviar en el formulario una dirección ajena o un precio alterado. | Cada pedido se compara con el cliente en sesión; si no es suyo, la respuesta es 404 y se registra en la bitácora. La dirección debe pertenecer al cliente. Precios, envío y existencias se recalculan en el servidor dentro de una transacción con bloqueo (A08). |
+| `/empleados` (tabla con IndexedDB y WebSocket) | A05: Inyección (XSS) | Un nombre como `<img src=x onerror=…>` se ejecutaría al dibujar la tabla con `innerHTML`. Además, la página era pública y el WebSocket aceptaba a cualquiera. | La tabla se construye con `createElement` y `textContent`. Las fotos solo se aceptan como archivo de imagen o `data:image` de hasta 2 MB. La ruta exige sesión de gerente o administración. El WebSocket exige un token firmado (HMAC, 30 min), revisa el origen y solo acepta un evento conocido, de hasta 1 KB y 10 mensajes cada 10 s. |
 
-## Evidencia y alcance de los hallazgos
+## Medidas por categoría (Práctica 6)
 
-- `routes/web.php`: `/empleados` está fuera de los grupos con middleware de autenticación.
-- `resources/views/empleados.blade.php`: `renderizarFilas` interpola nombre, correo, puesto, fecha y dirección de fotografía en `tr.innerHTML`.
-- `public/js/empleados-db.js`: los empleados se almacenan en `SudcaliPersonalDB`, dentro del navegador. No se observó sincronización de esos registros con una base de datos del servidor.
-- `public/sw.js`: guarda `/empleados` en caché. Proteger solamente la ruta no elimina la copia previamente almacenada ni los registros de IndexedDB.
-- `server-socket.js`: retransmite cada mensaje a todos los clientes conectados sin comprobar identidad, equipo u origen. No configura límites propios de tamaño o frecuencia.
-- `resources/views/layouts/app.blade.php`: ante un mensaje WebSocket, vuelve a cargar la tabla local. El mensaje no sincroniza los registros entre navegadores ni se inserta directamente como HTML.
+| Categoría | Medida en el proyecto | Evidencia |
+| --- | --- | --- |
+| A01 Control de acceso | Guards separados (`empleado`, `cliente`). Permisos por puesto (`AsegurarPermisoPuesto`). Pedidos, tickets, direcciones y variantes se validan contra su dueño o sucursal. Ruta `/empleados` protegida. WebSocket con token. | `SeguridadTest`, `AdministracionPosTest` ("salespeople cannot open…"), `TiendaEnLineaTest` ("customers see their own orders…", "…someone else's address"), `PuntoVentaTest` ("…tickets from another branch") |
+| A02 Configuración | Middleware `CabecerasSeguridad`: CSP, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, HSTS en HTTPS y sin `X-Powered-By`. En producción, `APP_DEBUG=false` (ver `.env.example`). | `SeguridadTest` ("every web response carries the security headers", "hsts is only sent over https") |
+| A03 Cadena de suministro | `composer.lock` y `package-lock.json` versionados. Auditoría con `composer audit` y `npm audit`. | Ver "Pendiente" |
+| A04 Criptografía | Contraseñas con bcrypt (cast `hashed`). En producción: URL forzadas a HTTPS (`URL::forceHttps`), cookie segura (`SESSION_SECURE_COOKIE=true`) y sesión cifrada. | `AppServiceProvider` |
+| A05 Inyección | Consultas con Eloquent y parámetros enlazados. Blade escapa toda salida con `{{ }}`. Sin `innerHTML` con datos del usuario. Validación de servidor en todos los formularios con Form Requests. | Pruebas de validación en las cuatro suites |
+| A06 Diseño inseguro | Existencias verificadas al cobrar. Envío solo a C.P. de B.C.S. El efectivo recibido debe cubrir el total. Un producto con ventas se oculta en vez de borrarse. | `TiendaEnLineaTest`, `PuntoVentaTest` |
+| A07 Autenticación | Bloqueo tras 5 intentos fallidos, mensaje genérico y regeneración de la sesión al entrar. En el registro: captcha, campo trampa y límite por IP. | `PuntoVentaTest` ("login is locked…"), `SeguridadTest` (captcha, campo trampa y límite) |
+| A08 Integridad | El servidor ignora precios y totales enviados por el navegador y los toma de la base de datos. | `PuntoVentaTest` ("a cash sale uses database prices…") |
+| A09 Bitácora | Canal `seguridad` en `storage/logs/seguridad-AAAA-MM-DD.log`, conservado 90 días. Registra:<ul><li>inicios de sesión fallidos y exitosos;</li><li>bloqueos;</li><li>cierres de sesión;</li><li>accesos denegados;</li><li>intentos de ver pedidos ajenos;</li><li>captcha fallido;</li><li>registros nuevos o limitados.</li></ul>Nunca guarda contraseñas ni tokens. El servidor WebSocket registra rechazos por origen, token y exceso de mensajes. | `SeguridadTest` ("failed logins are logged without the password", "the lockout…", "denied access…") |
+| A10 Excepciones | Las ventas y pedidos se hacen en transacciones: si algo falla no se guarda nada. Con `APP_DEBUG=false` los errores no muestran detalles internos. | `TiendaEnLineaTest` ("checkout fails if stock ran out…") |
 
-El riesgo de XSS observado persiste en el navegador donde se guarda el registro. No se ha demostrado propagación a otros usuarios. Del mismo modo, que `/empleados` sea público no demuestra acceso remoto a los registros locales de otros dispositivos.
+Además:
+- Al cerrar sesión en el POS se envía `Clear-Site-Data: "cache", "storage"`, que borra la caché, el service worker y la IndexedDB del navegador.
+- El service worker ya no guarda páginas privadas en caché.
 
 ## Cómo comprobar las medidas
 
-1. Un visitante sin sesión no debe obtener la interfaz privada de empleados; un usuario sin permisos debe recibir una denegación. Comprobar también el comportamiento sin conexión y después de cerrar sesión.
-2. Los valores que contengan caracteres de HTML deben mostrarse como texto, sin crear elementos ni ejecutar código.
-3. El WebSocket debe rechazar conexiones sin credenciales válidas y orígenes no permitidos. Un usuario de un equipo no debe recibir eventos de otro. Los eventos inválidos o excesivos deben rechazarse de forma controlada.
+1. Sin sesión, abrir `/empleados`: debe enviar al login del POS. Con un vendedor o almacenista: 403.
+2. En `/empleados`, guardar un nombre `<img src=x onerror=alert(1)>`: debe verse como texto y no ejecutarse.
+3. Iniciar sesión con contraseña incorrecta 6 veces: el sexto intento queda bloqueado y el evento aparece en `storage/logs/seguridad-*.log`.
+4. En `/registro`, responder mal el captcha o enviar 6 registros en un minuto: se rechaza.
+5. Con un cliente, abrir `/mis-pedidos/{id}` de otro cliente: 404.
+6. Revisar las cabeceras con las herramientas del navegador (pestaña Red) o con `curl -I http://localhost:8000/tienda`.
+7. Conectarse al WebSocket sin token o desde otro origen: el servidor responde 401 o 403.
 
-## Controles complementarios
+## Pendiente
 
-- Completar la verificación de correo y evaluar segundo factor para administradores. El modelo `User` actualmente no implementa `MustVerifyEmail`.
-- Conservar las políticas y comprobaciones de pertenencia existentes para equipos, miembros e invitaciones.
-- Verificar HTTPS, cookies seguras, depuración desactivada y cabeceras de seguridad en producción.
-- Validar tipo, dimensiones y tamaño de las fotografías. `accept="image/*"` no es una validación de seguridad; si se habilita una subida al servidor, repetir allí las comprobaciones.
-- Auditar dependencias con `composer audit` y `npm audit`, y registrar accesos rechazados, cambios de privilegios y abuso del WebSocket sin almacenar secretos.
+- **Dependencias (A03):** el 21 de noviembre de 2026, `composer audit` reportó 15 avisos en 8 paquetes, entre ellos `laravel/framework`, `symfony/http-foundation` y `league/commonmark`. `npm audit` reportó 4: `vite`, `shell-quote` y `source-map-js`. Se corrigen con `composer update` y `npm audit fix`, y después se corren las pruebas.
+- **Publicación:** configurar el servidor con los valores de producción de `.env.example`:
+  - `APP_ENV=production` y `APP_DEBUG=false`;
+  - HTTPS;
+  - `SESSION_SECURE_COOKIE=true`;
+  - un `WEBSOCKET_SECRET` propio.
+- La CSP permite `'unsafe-inline'` porque las vistas tienen scripts y estilos en línea. Moverlos a archivos permitiría quitarlo.
 
 ## Referencias
 
-- Material de clase: «14. Taller - Superficies de ataque de su proyecto», páginas 1–3, y «Tipos de ataques a sitios web», diapositivas 4–6 y 10.
+- Material de clase: «14. Taller - Superficies de ataque de su proyecto» y «15. Lo que queda del semestre».
 - [OWASP Top 10:2025](https://top10.owasp.org/2025/0x00_2025-Introduction/).
 - [Prevención de XSS basado en DOM](https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html).
 - [Seguridad de WebSocket](https://cheatsheetseries.owasp.org/cheatsheets/WebSocket_Security_Cheat_Sheet.html).
+- [HTTP Headers Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html).

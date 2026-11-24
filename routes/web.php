@@ -1,7 +1,9 @@
 <?php
 
+use App\Actions\PuntoVenta\FirmarTokenWebSocket;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Teams\TeamInvitationController;
+use App\Http\Middleware\AsegurarPermisoPuesto;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
@@ -9,10 +11,13 @@ use Illuminate\Support\Facades\Route;
 // (si el empleado ya tiene sesión, el login lo manda directo a vender).
 Route::redirect('/', '/pos/login');
 
-// Vista Catálogo de Personal
-Route::get('/empleados', function () {
-    return view('empleados');
-})->name('empleados');
+// Catálogo de Personal (IndexedDB + WebSocket): solo gerencia y administración.
+Route::get('/empleados', function (FirmarTokenWebSocket $firmarToken) {
+    return view('empleados', [
+        'websocketUrl' => config('services.websocket.url'),
+        'websocketToken' => $firmarToken->handle(auth('empleado')->user()),
+    ]);
+})->middleware(['auth:empleado', AsegurarPermisoPuesto::class.':administrar'])->name('empleados');
 
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])

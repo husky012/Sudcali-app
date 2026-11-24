@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Tienda;
 
+use App\Actions\Tienda\Captcha;
+use App\Support\BitacoraSeguridad;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -35,6 +38,14 @@ class RegistrarClienteRequest extends FormRequest
             'correo' => ['required', 'email', 'max:255', 'unique:clientes,correo'],
             'password' => ['required', 'confirmed', Password::min(8)],
             'terminos' => ['accepted'],
+            'captcha' => ['required', function (string $atributo, mixed $valor, Closure $fallar): void {
+                if (! app(Captcha::class)->esValido($valor)) {
+                    BitacoraSeguridad::registrar('captcha_fallido', ['correo' => $this->input('correo')]);
+                    $fallar('La respuesta de la verificación no es correcta. Resuelve la nueva pregunta.');
+                }
+            }],
+            // Campo trampa: invisible para personas, los bots suelen llenarlo.
+            'sitio_web' => ['prohibited'],
         ];
     }
 
@@ -48,6 +59,8 @@ class RegistrarClienteRequest extends FormRequest
         return [
             'correo.unique' => 'Ya hay una cuenta con ese correo. Inicia sesión.',
             'terminos.accepted' => 'Debes aceptar los términos y condiciones.',
+            'captcha.required' => 'Responde la pregunta de verificación.',
+            'sitio_web.prohibited' => 'No pudimos crear la cuenta. Inténtalo de nuevo.',
         ];
     }
 }

@@ -25,7 +25,7 @@ Route::delete('/carrito/{variante}', [CarritoController::class, 'destroy'])->whe
 Route::get('/login', [SesionClienteController::class, 'create'])->name('login');
 Route::post('/tienda/login', [SesionClienteController::class, 'store'])->name('tienda.login.store');
 Route::get('/registro', [RegistroController::class, 'create'])->name('registro');
-Route::post('/registro', [RegistroController::class, 'store'])->name('registro.store');
+Route::post('/registro', [RegistroController::class, 'store'])->middleware('throttle:registro')->name('registro.store');
 
 Route::middleware('auth:cliente')->group(function () {
     Route::post('/tienda/logout', [SesionClienteController::class, 'destroy'])->name('tienda.logout');

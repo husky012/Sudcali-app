@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Empleado;
+use App\Support\BitacoraSeguridad;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,14 @@ class AsegurarPermisoPuesto
             'inventario' => $empleado->puesto->puedeGestionarInventario(),
             default => false,
         };
+
+        if (! $autorizado) {
+            BitacoraSeguridad::registrar('acceso_denegado', [
+                'empleado_id' => $empleado->id,
+                'puesto' => $empleado->puesto->value,
+                'permiso' => $permiso,
+            ]);
+        }
 
         abort_unless($autorizado, 403, 'Tu puesto no tiene acceso a esta sección.');
 

@@ -59,6 +59,7 @@ class SesionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return to_route('pos.login');
+        // Borra en el navegador la caché, el service worker y la IndexedDB de /empleados.
+        return to_route('pos.login')->header('Clear-Site-Data', '"cache", "storage"');
     }
 }

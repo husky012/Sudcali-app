@@ -65,6 +65,14 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'seguridad' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/seguridad.log'),
+            'level' => 'info',
+            'days' => 90,
+            'replace_placeholders' => true,
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

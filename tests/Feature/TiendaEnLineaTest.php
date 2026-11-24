@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Tienda\Captcha;
 use App\Enums\EstadoEnvio;
 use App\Enums\OrigenVenta;
 use App\Enums\PuestoEmpleado;
@@ -39,7 +40,7 @@ test('the login page shows the customer tab by default and the employee tab for 
 });
 
 test('customers can register and are logged in', function () {
-    $this->post(route('registro.store'), [
+    $this->withSession([Captcha::CLAVE_SESION => 7])->post(route('registro.store'), [
         'nombre' => 'Lucía',
         'apellido_paterno' => 'Amador',
         'correo' => 'Lucia@Ejemplo.com',
@@ -47,6 +48,7 @@ test('customers can register and are logged in', function () {
         'password' => 'secreta123',
         'password_confirmation' => 'secreta123',
         'terminos' => '1',
+        'captcha' => '7',
     ])->assertRedirect(route('home'));
 
     $this->assertAuthenticatedAs(Cliente::where('correo', 'lucia@ejemplo.com')->sole(), 'cliente');
