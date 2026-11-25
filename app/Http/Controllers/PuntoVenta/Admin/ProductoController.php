@@ -10,6 +10,7 @@ use App\Models\Producto;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -64,7 +65,7 @@ class ProductoController extends Controller
         $datos = $request->safe()->except('imagen');
 
         if ($request->hasFile('imagen')) {
-            $datos['imagen'] = '/storage/'.$request->file('imagen')->store('productos', 'public');
+            $datos['imagen'] = $this->guardarImagen($request->file('imagen'));
         }
 
         $producto = Producto::create($datos);
@@ -95,7 +96,7 @@ class ProductoController extends Controller
 
         if ($request->hasFile('imagen')) {
             $this->borrarImagenSubida($producto);
-            $datos['imagen'] = '/storage/'.$request->file('imagen')->store('productos', 'public');
+            $datos['imagen'] = $this->guardarImagen($request->file('imagen'));
         }
 
         $producto->update($datos);
@@ -124,12 +125,20 @@ class ProductoController extends Controller
     }
 
     /**
+     * Guarda la imagen fuera de la carpeta pública con un nombre nuevo y devuelve su ruta en el sitio.
+     */
+    private function guardarImagen(UploadedFile $imagen): string
+    {
+        return route('producto.imagen', basename((string) $imagen->store('productos', 'local')), absolute: false);
+    }
+
+    /**
      * Borra la imagen solo si fue subida desde el POS (no las de public/imagenes).
      */
     private function borrarImagenSubida(Producto $producto): void
     {
-        if ($producto->imagen && str_starts_with($producto->imagen, '/storage/')) {
-            Storage::disk('public')->delete(substr($producto->imagen, strlen('/storage/')));
+        if ($producto->imagen && str_starts_with($producto->imagen, '/imagenes-producto/')) {
+            Storage::disk('local')->delete('productos/'.basename($producto->imagen));
         }
     }
 }

@@ -83,7 +83,7 @@ test('managers can open every administration screen', function (string $ruta) {
 // ---------- Empleados ----------
 
 test('a manager can register an employee who can then log in', function () {
-    Storage::fake('public');
+    Storage::fake('local');
 
     $this->actingAs(empleadoConPuesto(PuestoEmpleado::Gerente), 'empleado')
         ->post(route('pos.admin.empleados.store'), datosEmpleado([
@@ -95,8 +95,82 @@ test('a manager can register an employee who can then log in', function () {
 
     expect($empleado->telefono)->toBe('6121234567')
         ->and(Hash::check('secreta123', $empleado->password))->toBeTrue();
-    Storage::disk('public')->assertExists($empleado->foto);
+    Storage::disk('local')->assertExists($empleado->foto);
 });
+
+test('employee photos are only served to managers and administration', function (PuestoEmpleado $puesto, int $estado) {
+    Storage::fake('local');
+    Storage::disk('local')->put('empleados/foto.jpg', 'contenido');
+    $empleado = Empleado::factory()->create(['foto' => 'empleados/foto.jpg']);
+
+    $this->actingAs(empleadoConPuesto($puesto), 'empleado')
+        ->get($empleado->fotoUrl())
+        ->assertStatus($estado);
+})->with([
+    'gerente' => [PuestoEmpleado::Gerente, 200],
+    'administración' => [PuestoEmpleado::Administracion, 200],
+    'almacén' => [PuestoEmpleado::Almacen, 403],
+    'vendedor' => [PuestoEmpleado::Vendedor, 403],
+]);
+
+test('guests cannot open an employee photo', function () {
+    $empleado = Empleado::factory()->create(['foto' => 'empleados/foto.jpg']);
+
+    $this->get($empleado->fotoUrl())->assertRedirect(route('pos.login'));
+});
+
+test('a program disguised as an image is rejected', function (string $nombre, string $contenido) {
+    Storage::fake('local');
+    $ruta = tempnam(sys_get_temp_dir(), 'sudcali');
+    file_put_contents($ruta, $contenido);
+
+    $this->actingAs(empleadoConPuesto(PuestoEmpleado::Gerente), 'empleado')
+        ->post(route('pos.admin.empleados.store'), datosEmpleado([
+            'foto' => new UploadedFile($ruta, $nombre, 'image/jpeg', null, true),
+        ]))
+        ->assertSessionHasErrors('foto');
+
+    unlink($ruta);
+    expect(Storage::disk('local')->allFiles())->toBe([])
+        ->and(Empleado::where('correo', 'ana@sudcali.test')->exists())->toBeFalse();
+})->with([
+    'php con nombre de imagen' => ['foto.jpg', '<?php system($_GET["c"]);'],
+    'doble extensión' => ['foto.jpg.php', '<?php system($_GET["c"]);'],
+    'imagen real con extensión php' => ['foto.php', base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==')],
+    'svg con script' => ['foto.svg', '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>'],
+]);
+
+test('product images are stored outside the public folder and served by the site', function () {
+    Storage::fake('local');
+    $producto = Producto::factory()->create();
+
+    $this->actingAs(empleadoConPuesto(PuestoEmpleado::Gerente), 'empleado')
+        ->put(route('pos.admin.productos.update', $producto), [
+            'categoria_id' => $producto->categoria_id,
+            'titulo' => $producto->titulo,
+            'precio' => 250,
+            'activo' => '1',
+            'imagen' => UploadedFile::fake()->create('../../mi foto.png', 50, 'image/png'),
+        ])
+        ->assertSessionHasNoErrors();
+
+    $imagen = $producto->fresh()->imagen;
+
+    expect($imagen)->toMatch('#^/imagenes-producto/[A-Za-z0-9]{40}\.png$#');
+    Storage::disk('local')->assertExists('productos/'.basename($imagen));
+    $this->get($imagen)->assertOk();
+});
+
+test('the product image address cannot reach other private files', function (string $ruta) {
+    Storage::fake('local');
+    Storage::disk('local')->put('empleados/foto.jpg', 'contenido');
+
+    $this->get($ruta)->assertNotFound();
+})->with([
+    'subir de carpeta' => ['/imagenes-producto/..%2Fempleados%2Ffoto.jpg'],
+    'nombre inventado' => ['/imagenes-producto/foto.jpg'],
+    'archivo que no existe' => ['/imagenes-producto/'.str_repeat('a', 40).'.jpg'],
+]);
 
 test('employee validation messages are in spanish', function () {
     $this->actingAs(empleadoConPuesto(PuestoEmpleado::Gerente), 'empleado')

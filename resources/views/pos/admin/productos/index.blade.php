@@ -76,7 +76,7 @@
                             <td class="acciones-tabla-pos">
                                 <a href="{{ route('pos.admin.productos.edit', $producto) }}">Editar</a>
                                 <form method="POST" action="{{ route('pos.admin.productos.destroy', $producto) }}"
-                                      onsubmit="return confirm('¿Eliminar {{ addslashes($producto->titulo) }}? Si ya se vendió, solo se ocultará.')">
+                                      data-confirmar="¿Eliminar {{ $producto->titulo }}? Si ya se vendió, solo se ocultará.">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="boton-peligro-texto-pos">Eliminar</button>

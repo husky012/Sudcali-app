@@ -57,7 +57,7 @@ class RegistrarClienteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'correo.unique' => 'Ya hay una cuenta con ese correo. Inicia sesión.',
+            'correo.unique' => 'No pudimos crear la cuenta con esos datos. Revísalos o intenta iniciar sesión.',
             'terminos.accepted' => 'Debes aceptar los términos y condiciones.',
             'captcha.required' => 'Responde la pregunta de verificación.',
             'sitio_web.prohibited' => 'No pudimos crear la cuenta. Inténtalo de nuevo.',

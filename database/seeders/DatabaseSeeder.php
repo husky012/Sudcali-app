@@ -7,6 +7,7 @@ use App\Models\DireccionCliente;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => Str::password(32),
         ]);
 
         $this->call([
@@ -31,6 +33,7 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Cliente',
             'apellido_paterno' => 'Demo',
             'correo' => 'cliente@sudcali.test',
+            'password' => config('services.demo.password') ?: Str::password(16),
         ]);
 
         DireccionCliente::factory()->principal()->for($cliente)->create();

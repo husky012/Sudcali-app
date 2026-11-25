@@ -40,7 +40,7 @@ class GuardarProductoRequest extends FormRequest
             'slug' => ['required', Rule::unique('productos', 'slug')->ignore($producto)],
             'descripcion' => ['nullable', 'string', 'max:2000'],
             'precio' => ['required', 'numeric', 'min:1', 'max:99999.99', 'decimal:0,2'],
-            'imagen' => ['nullable', 'image', 'max:4096'],
+            'imagen' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:4096'],
             'activo' => ['boolean'],
         ];
     }

@@ -45,7 +45,7 @@ class GuardarEmpleadoRequest extends FormRequest
             'telefono' => ['required', 'digits:10', Rule::unique('empleados', 'telefono')->ignore($empleado)],
             'correo' => ['required', 'email', 'max:255', Rule::unique('empleados', 'correo')->ignore($empleado)],
             'password' => [$empleado ? 'nullable' : 'required', 'confirmed', Password::min(8)],
-            'foto' => ['nullable', 'image', 'max:2048'],
+            'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:2048'],
             'activo' => ['boolean'],
         ];
     }

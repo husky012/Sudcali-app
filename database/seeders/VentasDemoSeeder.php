@@ -14,6 +14,7 @@ use App\Models\Venta;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Historial de ventas de los últimos 6 meses para probar las estadísticas.
@@ -41,7 +42,7 @@ class VentasDemoSeeder extends Seeder
         // Algunos productos se venden mucho más que otros para que el ranking tenga sentido.
         $populares = $variantes->shuffle()->take(12);
 
-        $clientes = Cliente::factory()->count(8)->create()
+        $clientes = Cliente::factory()->count(8)->create(['password' => Str::password(32)])
             ->each(fn (Cliente $cliente) => DireccionCliente::factory()->principal()->for($cliente)->create());
 
         DB::transaction(function () use ($variantes, $populares, $empleados, $clientes) {

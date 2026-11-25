@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-427ae35ff219 Creating 
+ Container sudcali-ab-run-427ae35ff219 Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.11 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        
+Server Hostname:        172.28.0.11
+Server Port:            8000
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   4.975 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19501461 bytes
+HTML transferred:       17780461 bytes
+Requests per second:    201.00 [#/sec] (mean)
+Time per request:       99.505 [ms] (mean)
+Time per request:       4.975 [ms] (mean, across all concurrent requests)
+Transfer rate:          3827.84 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.4      0       5
+Processing:    25   98   9.9     97     190
+Waiting:       24   97   9.9     97     189
+Total:         26   98   9.7     98     192
+
+Percentage of the requests served within a certain time (ms)
+  50%     98
+  66%     99
+  75%    100
+  80%    101
+  90%    105
+  95%    108
+  98%    113
+  99%    116
+ 100%    192 (longest request)

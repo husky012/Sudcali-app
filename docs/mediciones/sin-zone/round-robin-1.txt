@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-f4b6255b8a3c Creating 
+ Container sudcali-ab-run-f4b6255b8a3c Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.10 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        nginx
+Server Hostname:        172.28.0.10
+Server Port:            80
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   2.892 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19427214 bytes
+HTML transferred:       17675214 bytes
+Requests per second:    345.79 [#/sec] (mean)
+Time per request:       57.838 [ms] (mean)
+Time per request:       2.892 [ms] (mean, across all concurrent requests)
+Transfer rate:          6560.36 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       3
+Processing:    25   56  16.6     61     121
+Waiting:       24   55  16.6     60     120
+Total:         25   57  16.6     61     122
+
+Percentage of the requests served within a certain time (ms)
+  50%     61
+  66%     65
+  75%     68
+  80%     69
+  90%     74
+  95%     80
+  98%     87
+  99%     91
+ 100%    122 (longest request)

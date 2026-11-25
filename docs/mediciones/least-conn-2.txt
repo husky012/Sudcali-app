@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-ba3ea1bb9270 Creating 
+ Container sudcali-ab-run-ba3ea1bb9270 Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.10 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        nginx
+Server Hostname:        172.28.0.10
+Server Port:            80
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   3.029 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19427076 bytes
+HTML transferred:       17675076 bytes
+Requests per second:    330.19 [#/sec] (mean)
+Time per request:       60.571 [ms] (mean)
+Time per request:       3.029 [ms] (mean, across all concurrent requests)
+Transfer rate:          6264.26 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       3
+Processing:    25   59  17.9     61     117
+Waiting:       25   58  17.9     59     116
+Total:         27   59  17.9     61     117
+
+Percentage of the requests served within a certain time (ms)
+  50%     61
+  66%     66
+  75%     71
+  80%     74
+  90%     82
+  95%     89
+  98%     93
+  99%     97
+ 100%    117 (longest request)

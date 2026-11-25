@@ -36,7 +36,7 @@
                     <span class="etiqueta-campo-pos">Imagen</span>
                     <img id="vistaPreviaImagen" class="vista-imagen-producto-pos" src="{{ $producto->imagen }}" alt="Imagen del producto" @if (! $producto->imagen) hidden @endif>
                     <label for="imagen" class="solo-lector">Subir imagen</label>
-                    <input type="file" id="imagen" name="imagen" accept="image/*">
+                    <input type="file" id="imagen" data-vista-previa="vistaPreviaImagen" name="imagen" accept="image/*">
                     <p class="ayuda-campo-pos">JPG o PNG, máximo 4 MB.</p>
                     @include('pos.partials.campo-error', ['campo' => 'imagen'])
                 </div>
@@ -126,7 +126,7 @@
                                     <td class="acciones-tabla-pos">
                                         @if ($variante->detalles_venta_count === 0)
                                             <form method="POST" action="{{ route('pos.admin.productos.variantes.destroy', [$producto, $variante]) }}"
-                                                  onsubmit="return confirm('¿Eliminar la talla {{ addslashes($variante->talla) }} ({{ addslashes($variante->color) }})?')">
+                                                  data-confirmar="¿Eliminar la talla {{ $variante->talla }} ({{ $variante->color }})?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="boton-peligro-texto-pos">Eliminar</button>
@@ -185,17 +185,5 @@
 @endsection
 
 @push('scripts')
-<script>
-    (() => {
-        const entrada = document.getElementById('imagen');
-        const vista = document.getElementById('vistaPreviaImagen');
-
-        entrada.addEventListener('change', () => {
-            const [archivo] = entrada.files;
-            if (!archivo) return;
-            vista.src = URL.createObjectURL(archivo);
-            vista.hidden = false;
-        });
-    })();
-</script>
+<script src="{{ asset('js/vista-previa.js') }}" defer></script>
 @endpush

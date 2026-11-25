@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-29c8bd69d2ae Creating 
+ Container sudcali-ab-run-29c8bd69d2ae Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.10 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        nginx
+Server Hostname:        172.28.0.10
+Server Port:            80
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   3.016 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19427027 bytes
+HTML transferred:       17675027 bytes
+Requests per second:    331.60 [#/sec] (mean)
+Time per request:       60.314 [ms] (mean)
+Time per request:       3.016 [ms] (mean, across all concurrent requests)
+Transfer rate:          6290.94 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       4
+Processing:    26   59  18.0     63     154
+Waiting:       25   57  18.0     62     153
+Total:         26   59  18.0     64     154
+
+Percentage of the requests served within a certain time (ms)
+  50%     64
+  66%     67
+  75%     70
+  80%     72
+  90%     78
+  95%     84
+  98%     92
+  99%     96
+ 100%    154 (longest request)

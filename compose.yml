@@ -1,0 +1,130 @@
+# Práctica 5: balanceador Nginx, dos nodos de Sudcali y una base de datos compartida.
+# Guía y resultados: docs/practica5.md
+name: sudcali
+
+x-entorno: &entorno
+    APP_NAME: Sudcali
+    APP_ENV: demo
+    APP_DEBUG: "false"
+    APP_URL: http://127.0.0.1:8080
+    APP_LOCALE: es
+    # La misma llave en los dos nodos: cada uno puede leer la cookie que creó el otro.
+    APP_KEY: ${APP_KEY:?Falta APP_KEY en .env}
+    LOG_CHANNEL: stderr
+    DB_CONNECTION: mysql
+    DB_HOST: 172.28.0.13
+    DB_DATABASE: sudcali
+    DB_USERNAME: sudcali
+    DB_PASSWORD: ${DOCKER_DB_PASSWORD:?Falta DOCKER_DB_PASSWORD en .env}
+    # Sesión y límites de intentos en la base compartida: sobreviven al cambio de nodo.
+    SESSION_DRIVER: database
+    CACHE_STORE: database
+    # Solo se le cree al balanceador.
+    TRUSTED_PROXIES: 172.28.0.10
+    # Procesos por nodo (artisan serve atiende una petición a la vez por proceso).
+    PHP_CLI_SERVER_WORKERS: "4"
+    DEMO_PASSWORD: ${DEMO_PASSWORD:-}
+
+x-nodo: &nodo
+    build:
+        context: .
+        target: nodo
+    init: true
+    stop_grace_period: 2s
+    volumes:
+        # Fotos e imágenes subidas: compartidas, o una foto guardada en un nodo no se vería en el otro.
+        - archivos:/app/storage/app/private
+        # La bitácora de seguridad sobrevive aunque se recreen los contenedores.
+        - bitacora:/app/storage/logs
+    depends_on:
+        db:
+            condition: service_healthy
+    healthcheck:
+        test: ["CMD", "php", "-r", "exit(@file_get_contents('http://127.0.0.1:8000/salud') === false ? 1 : 0);"]
+        interval: 5s
+        timeout: 3s
+        retries: 10
+
+services:
+    balanceador:
+        image: nginx:1.27-alpine
+        ports:
+            - "127.0.0.1:8080:80"
+        volumes:
+            # ALGORITMO: round_robin o least_conn.
+            - ./docs/servidor/docker/nodos-${ALGORITMO:-least_conn}.conf:/etc/nginx/conf.d/00-nodos.conf:ro
+            - ./docs/servidor/docker/balanceo.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            app1:
+                condition: service_healthy
+            app2:
+                condition: service_healthy
+        networks:
+            red:
+                ipv4_address: 172.28.0.10
+
+    app1:
+        <<: *nodo
+        environment:
+            <<: *entorno
+            NODO: "1"
+        networks:
+            red:
+                ipv4_address: 172.28.0.11
+
+    app2:
+        <<: *nodo
+        environment:
+            <<: *entorno
+            NODO: "2"
+        networks:
+            red:
+                ipv4_address: 172.28.0.12
+
+    db:
+        image: mysql:8.4
+        environment:
+            MYSQL_DATABASE: sudcali
+            MYSQL_USER: sudcali
+            MYSQL_PASSWORD: ${DOCKER_DB_PASSWORD:?Falta DOCKER_DB_PASSWORD en .env}
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+        volumes:
+            - datos:/var/lib/mysql
+        healthcheck:
+            test: ["CMD-SHELL", "mysql -h 127.0.0.1 -u sudcali -p$$MYSQL_PASSWORD -e 'select 1' sudcali"]
+            interval: 5s
+            timeout: 5s
+            retries: 30
+        networks:
+            red:
+                ipv4_address: 172.28.0.13
+
+    # docker compose run --rm preparar  → borra y vuelve a crear los datos de demostración del contenedor.
+    preparar:
+        build:
+            context: .
+            target: preparar
+        profiles: [herramientas]
+        environment: *entorno
+        depends_on:
+            db:
+                condition: service_healthy
+        networks: [red]
+
+    # docker compose run --rm ab -l -n 1000 -c 20 http://172.28.0.10/tienda
+    ab:
+        image: httpd:2.4-alpine
+        entrypoint: ["ab"]
+        profiles: [herramientas]
+        networks: [red]
+
+networks:
+    red:
+        ipam:
+            config:
+                - subnet: 172.28.0.0/24
+
+volumes:
+    datos:
+    archivos:
+    bitacora:

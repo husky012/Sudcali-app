@@ -64,6 +64,7 @@
         @yield('contenido')
     </main>
 
+    <script src="{{ asset('js/pos-acciones.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>

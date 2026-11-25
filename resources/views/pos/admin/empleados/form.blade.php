@@ -53,7 +53,7 @@
                 <label for="foto">Foto</label>
                 <div class="vista-foto-pos">
                     <img id="vistaPreviaFoto" src="{{ $empleado->fotoUrl() }}" alt="Foto actual" @if (! $empleado->fotoUrl()) hidden @endif>
-                    <input type="file" id="foto" name="foto" accept="image/*">
+                    <input type="file" id="foto" data-vista-previa="vistaPreviaFoto" name="foto" accept="image/*">
                 </div>
                 <p class="ayuda-campo-pos">JPG o PNG, máximo 2 MB.</p>
                 @include('pos.partials.campo-error', ['campo' => 'foto'])
@@ -136,17 +136,5 @@
 @endsection
 
 @push('scripts')
-<script>
-    (() => {
-        const entrada = document.getElementById('foto');
-        const vista = document.getElementById('vistaPreviaFoto');
-
-        entrada.addEventListener('change', () => {
-            const [archivo] = entrada.files;
-            if (!archivo) return;
-            vista.src = URL.createObjectURL(archivo);
-            vista.hidden = false;
-        });
-    })();
-</script>
+<script src="{{ asset('js/vista-previa.js') }}" defer></script>
 @endpush

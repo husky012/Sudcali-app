@@ -15,8 +15,8 @@ Elegimos un algoritmo para cada caso según la duración de las peticiones, la c
 
 ## Aplicación en Sudcali
 
-Los perfiles de tráfico identificados son las solicitudes web de la tienda, las conexiones WebSocket y las operaciones locales del módulo de empleados. Este módulo utiliza TiendaPersonalDB en IndexedDB y un Service Worker con caché sudcali-v2. Las consultas locales y los recursos servidos desde caché no pasan por el balanceador.
+Los perfiles de tráfico identificados son las solicitudes web de la tienda, las conexiones WebSocket y las operaciones locales del módulo de empleados. Este módulo utiliza SudcaliPersonalDB en IndexedDB y un Service Worker con caché sudcali-v4, que solo guarda archivos JavaScript públicos. Las consultas locales y los recursos servidos desde caché no pasan por el balanceador.
 
-Para resolver la sesión proponemos un almacén compartido en el servidor, accesible por todas las instancias de la aplicación. IndexedDB conserva datos en cada navegador y no sustituye ese almacén. Si varios servidores WebSocket deben distribuir los mismos eventos, también necesitaremos un canal compartido, como Redis.
+Para resolver la sesión usamos un almacén compartido: la base de datos, accesible por los dos nodos. El montaje con Docker y las mediciones están en [practica5.md](practica5.md). IndexedDB conserva datos en cada navegador y no sustituye ese almacén. Si varios servidores WebSocket deben distribuir los mismos eventos, también necesitaremos un canal compartido, como Redis.
 
 Referencia: material de clase Balanceo de carga · Sesión 15, diapositivas 4 a 6, 11 a 13 y 16 a 17.

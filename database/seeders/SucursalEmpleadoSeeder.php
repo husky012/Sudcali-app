@@ -6,6 +6,7 @@ use App\Enums\PuestoEmpleado;
 use App\Models\Empleado;
 use App\Models\Sucursal;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class SucursalEmpleadoSeeder extends Seeder
 {
@@ -27,7 +28,10 @@ class SucursalEmpleadoSeeder extends Seeder
             ),
         ]);
 
-        Empleado::updateOrCreate(
+        // Las contraseñas no se escriben en el repositorio: salen de DEMO_PASSWORD o se generan.
+        $password = config('services.demo.password') ?: Str::password(16);
+
+        $gerente = Empleado::firstOrCreate(
             ['correo' => 'gerente@sudcali.test'],
             [
                 'sucursal_id' => $centro->id,
@@ -36,15 +40,19 @@ class SucursalEmpleadoSeeder extends Seeder
                 'puesto' => PuestoEmpleado::Gerente,
                 'fecha_contratacion' => now()->subYear(),
                 'telefono' => '6120000100',
-                'password' => 'password',
+                'password' => $password,
             ],
         );
+
+        if ($gerente->wasRecentlyCreated && ! config('services.demo.password')) {
+            $this->command?->warn("Contraseña de gerente@sudcali.test: {$password}");
+        }
 
         if (Empleado::count() === 1) {
             $sucursales->each(fn (Sucursal $sucursal) => Empleado::factory()
                 ->count(3)
                 ->for($sucursal)
-                ->create());
+                ->create(['password' => $password]));
         }
     }
 }

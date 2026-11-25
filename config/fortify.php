@@ -152,7 +152,8 @@ return [
     */
 
     'features' => [
-        Features::resetPasswords(),
+        // resetPasswords está apagado: el guard "web" no se usa en Sudcali y su respuesta
+        // revela si un correo existe (OWASP A07).
     ],
 
 ];

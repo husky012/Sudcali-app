@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('titulo', 'Sudcali - Tienda en Línea & Punto de Venta | La Paz, B.C.S.')</title>
     
-    <!-- Permite cargar imágenes y estilos HTTPS a través del túnel sin bloqueos -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    
     @vite(['resources/css/app.css'])
 </head>
 <body class="cuerpo-sudcali">
@@ -103,29 +100,7 @@
     </footer>
 
     <!-- SCRIPTS -->
-    <script>
-        // Control del menú hamburguesa
-        document.addEventListener('DOMContentLoaded', () => {
-            const botonMenu = document.getElementById('botonMenu');
-            const botonCerrar = document.getElementById('botonCerrar');
-            const menuPrincipal = document.getElementById('menuPrincipal');
-            const fondoMenu = document.getElementById('fondoMenu');
-
-            function abrirMenu() {
-                menuPrincipal.classList.add('activo');
-                fondoMenu.classList.add('activo');
-            }
-
-            function cerrarMenu() {
-                menuPrincipal.classList.remove('activo');
-                fondoMenu.classList.remove('activo');
-            }
-
-            if (botonMenu) botonMenu.addEventListener('click', abrirMenu);
-            if (botonCerrar) botonCerrar.addEventListener('click', cerrarMenu);
-            if (fondoMenu) fondoMenu.addEventListener('click', cerrarMenu);
-        });
-    </script>
+    <script src="{{ asset('js/menu.js') }}" defer></script>
 
     @stack('scripts')
 </body>

@@ -88,11 +88,11 @@ class Empleado extends Authenticatable
     }
 
     /**
-     * URL pública de la foto o null si no tiene.
+     * URL de la foto (solo la ve administración) o null si no tiene.
      */
     public function fotoUrl(): ?string
     {
-        return $this->foto ? asset('storage/'.$this->foto) : null;
+        return $this->foto ? route('pos.admin.empleados.foto', $this) : null;
     }
 
     /**

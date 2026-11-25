@@ -54,6 +54,7 @@ Route::prefix('pos')->name('pos.')->group(function () {
                     ->whereIn('reporte', ['ventas', 'catalogo', 'empleados'])
                     ->name('estadisticas.exportar');
 
+                Route::get('empleados/{empleado}/foto', [EmpleadoController::class, 'foto'])->name('empleados.foto');
                 Route::resource('empleados', EmpleadoController::class)->except('show');
                 Route::resource('categorias', CategoriaController::class)->except('show');
                 Route::resource('productos', ProductoController::class)->except('show');

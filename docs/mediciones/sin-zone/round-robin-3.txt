@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-f536e56aecdd Creating 
+ Container sudcali-ab-run-f536e56aecdd Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.10 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        nginx
+Server Hostname:        172.28.0.10
+Server Port:            80
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   2.952 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19427260 bytes
+HTML transferred:       17675260 bytes
+Requests per second:    338.74 [#/sec] (mean)
+Time per request:       59.041 [ms] (mean)
+Time per request:       2.952 [ms] (mean, across all concurrent requests)
+Transfer rate:          6426.64 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       3
+Processing:    25   57  17.0     61     148
+Waiting:       24   56  17.0     60     147
+Total:         25   58  17.0     62     149
+
+Percentage of the requests served within a certain time (ms)
+  50%     62
+  66%     66
+  75%     69
+  80%     70
+  90%     77
+  95%     82
+  98%     90
+  99%     92
+ 100%    149 (longest request)

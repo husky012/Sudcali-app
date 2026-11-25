@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EmpleadoController extends Controller
 {
@@ -76,7 +77,7 @@ class EmpleadoController extends Controller
         $datos['password'] = $request->validated('password');
 
         if ($request->hasFile('foto')) {
-            $datos['foto'] = $request->file('foto')->store('empleados', 'public');
+            $datos['foto'] = $request->file('foto')->store('empleados', 'local');
         }
 
         $empleado = Empleado::create($datos);
@@ -94,6 +95,16 @@ class EmpleadoController extends Controller
             'empleado' => $empleado,
             ...$this->opcionesFormulario(),
         ]);
+    }
+
+    /**
+     * Entrega la foto, que vive fuera de la carpeta pública, solo a quien puede administrar.
+     */
+    public function foto(Empleado $empleado): StreamedResponse
+    {
+        abort_unless($empleado->foto && Storage::disk('local')->exists($empleado->foto), 404);
+
+        return Storage::disk('local')->response($empleado->foto, headers: ['Cache-Control' => 'private, no-store']);
     }
 
     /**
@@ -115,7 +126,7 @@ class EmpleadoController extends Controller
 
         if ($request->hasFile('foto')) {
             $this->borrarFoto($empleado);
-            $datos['foto'] = $request->file('foto')->store('empleados', 'public');
+            $datos['foto'] = $request->file('foto')->store('empleados', 'local');
         }
 
         $empleado->update($datos);
@@ -161,12 +172,12 @@ class EmpleadoController extends Controller
     }
 
     /**
-     * Borra la foto guardada en el disco público, si existe.
+     * Borra la foto guardada en el disco privado, si existe.
      */
     private function borrarFoto(Empleado $empleado): void
     {
         if ($empleado->foto) {
-            Storage::disk('public')->delete($empleado->foto);
+            Storage::disk('local')->delete($empleado->foto);
         }
     }
 }

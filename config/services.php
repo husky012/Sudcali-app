@@ -33,6 +33,18 @@ return [
         'secret' => env('WEBSOCKET_SECRET'),
     ],
 
+    // Contraseña de las cuentas de demostración que crean los seeders. Sin valor se genera una al azar.
+    'demo' => [
+        'password' => env('DEMO_PASSWORD'),
+    ],
+
+    // Nombre del nodo detrás del balanceador (Práctica 5). Vacío: no se anuncia.
+    'nodo' => env('NODO'),
+
+    'hsts' => [
+        'max_age' => (int) env('HSTS_MAX_AGE', 31536000),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

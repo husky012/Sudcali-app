@@ -3,6 +3,7 @@
 use App\Http\Controllers\Tienda\CarritoController;
 use App\Http\Controllers\Tienda\CatalogoController;
 use App\Http\Controllers\Tienda\CheckoutController;
+use App\Http\Controllers\Tienda\ImagenProductoController;
 use App\Http\Controllers\Tienda\PedidoController;
 use App\Http\Controllers\Tienda\RegistroController;
 use App\Http\Controllers\Tienda\SesionClienteController;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/tienda', [CatalogoController::class, 'inicio'])->name('home');
 Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo');
 Route::get('/producto/{producto}', [CatalogoController::class, 'show'])->name('producto.detalle');
+
+// Imágenes subidas desde el POS: se guardan fuera de la carpeta pública.
+Route::get('/imagenes-producto/{archivo}', ImagenProductoController::class)
+    ->where('archivo', '[A-Za-z0-9]{40}\.(jpg|jpeg|png|webp)')
+    ->name('producto.imagen');
 
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito');
 Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.agregar');

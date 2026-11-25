@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-438f6f56347e Creating 
+ Container sudcali-ab-run-438f6f56347e Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.11 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        
+Server Hostname:        172.28.0.11
+Server Port:            8000
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   5.406 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19501124 bytes
+HTML transferred:       17780124 bytes
+Requests per second:    184.97 [#/sec] (mean)
+Time per request:       108.123 [ms] (mean)
+Time per request:       5.406 [ms] (mean, across all concurrent requests)
+Transfer rate:          3522.65 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.5      0       6
+Processing:    23  106  10.6    106     193
+Waiting:       22  105  10.6    106     192
+Total:         26  106  10.4    106     196
+
+Percentage of the requests served within a certain time (ms)
+  50%    106
+  66%    109
+  75%    110
+  80%    111
+  90%    115
+  95%    118
+  98%    122
+  99%    123
+ 100%    196 (longest request)

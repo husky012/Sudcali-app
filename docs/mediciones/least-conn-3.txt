@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-da07a3055913 Creating 
+ Container sudcali-ab-run-da07a3055913 Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.10 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        nginx
+Server Hostname:        172.28.0.10
+Server Port:            80
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   3.025 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19426809 bytes
+HTML transferred:       17674809 bytes
+Requests per second:    330.58 [#/sec] (mean)
+Time per request:       60.499 [ms] (mean)
+Time per request:       3.025 [ms] (mean, across all concurrent requests)
+Transfer rate:          6271.66 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       3
+Processing:    24   59  17.9     61     149
+Waiting:       24   58  17.9     60     148
+Total:         25   59  17.8     61     150
+
+Percentage of the requests served within a certain time (ms)
+  50%     61
+  66%     66
+  75%     71
+  80%     74
+  90%     82
+  95%     85
+  98%     89
+  99%     94
+ 100%    150 (longest request)

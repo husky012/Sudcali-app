@@ -117,22 +117,5 @@
 @endsection
 
 @push('scripts')
-<script>
-    (() => {
-        const formulario = document.getElementById('formCheckout');
-        const bloqueNueva = document.getElementById('direccionNueva');
-
-        formulario.addEventListener('change', (evento) => {
-            if (evento.target.name === 'direccion_id') {
-                bloqueNueva.hidden = evento.target.value !== 'nueva';
-            }
-        });
-
-        formulario.addEventListener('submit', () => {
-            const boton = document.getElementById('botonConfirmar');
-            boton.disabled = true;
-            boton.textContent = 'Registrando pedido…';
-        });
-    })();
-</script>
+<script src="{{ asset('js/checkout.js') }}" defer></script>
 @endpush

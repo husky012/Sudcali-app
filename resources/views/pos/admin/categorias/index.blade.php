@@ -37,7 +37,7 @@
                                 <a href="{{ route('pos.admin.categorias.edit', $categoria) }}">Editar</a>
                                 @if ($categoria->productos_count === 0)
                                     <form method="POST" action="{{ route('pos.admin.categorias.destroy', $categoria) }}"
-                                          onsubmit="return confirm('¿Eliminar la categoría {{ addslashes($categoria->nombre) }}?')">
+                                          data-confirmar="¿Eliminar la categoría {{ $categoria->nombre }}?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="boton-peligro-texto-pos">Eliminar</button>

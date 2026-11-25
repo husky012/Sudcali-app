@@ -90,7 +90,7 @@
                         <footer class="acciones-pedido-pos">
                             @foreach ($siguientes[$pedido->estado_envio->value] as $estado => $etiqueta)
                                 <form method="POST" action="{{ route('pos.admin.pedidos.update', $pedido) }}"
-                                      @if ($estado === 'cancelado') onsubmit="return confirm('¿Cancelar el pedido #{{ $pedido->id }}? Las piezas regresarán al inventario.')" @endif>
+                                      @if ($estado === 'cancelado') data-confirmar="¿Cancelar el pedido #{{ $pedido->id }}? Las piezas regresarán al inventario." @endif>
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="estado_envio" value="{{ $estado }}">
@@ -120,25 +120,5 @@
 @endsection
 
 @push('scripts')
-<script>
-    (() => {
-        const visor = document.getElementById('visorImagen');
-        const imagen = document.getElementById('imagenVisor');
-        const titulo = document.getElementById('tituloVisor');
-
-        document.querySelectorAll('[data-ampliar]').forEach((boton) => {
-            boton.addEventListener('click', () => {
-                imagen.src = boton.dataset.ampliar;
-                imagen.alt = boton.dataset.titulo;
-                titulo.textContent = boton.dataset.titulo;
-                visor.showModal();
-            });
-        });
-
-        // Cerrar al hacer clic fuera de la imagen (Esc ya lo cierra el navegador).
-        visor.addEventListener('click', (evento) => {
-            if (evento.target === visor) visor.close();
-        });
-    })();
-</script>
+<script src="{{ asset('js/visor-pedidos.js') }}" defer></script>
 @endpush

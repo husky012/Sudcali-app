@@ -44,6 +44,15 @@ function empleadoDelToken(token) {
     return timingSafeEqual(esperada, recibida) ? Number(empleadoId) : null;
 }
 
+/**
+ * La bitácora no guarda IP completas: solo la red (último octeto en 0).
+ */
+function redDe(ip) {
+    const limpia = String(ip ?? '').replace(/^::ffff:/, '');
+    if (/^\d+\.\d+\.\d+\.\d+$/.test(limpia)) return limpia.replace(/\d+$/, '0');
+    return limpia.split(':').slice(0, 3).join(':') + '::';
+}
+
 function registrar(evento, datos = {}) {
     console.log(JSON.stringify({ fecha: new Date().toISOString(), evento, ...datos }));
 }
@@ -52,15 +61,15 @@ const wss = new WebSocketServer({
     port: PORT,
     maxPayload: 1024,
     verifyClient: ({ origin, req }, aceptar) => {
-        const ip = req.socket.remoteAddress;
+        const red = redDe(req.socket.remoteAddress);
 
         if (!ORIGENES_PERMITIDOS.includes(origin)) {
-            registrar('origen_rechazado', { ip, origin });
+            registrar('origen_rechazado', { red, origin });
             return aceptar(false, 403, 'Origen no permitido');
         }
 
         if (wss.clients.size >= MAX_CONEXIONES) {
-            registrar('conexiones_agotadas', { ip });
+            registrar('conexiones_agotadas', { red });
             return aceptar(false, 503, 'Demasiadas conexiones');
         }
 
@@ -68,7 +77,7 @@ const wss = new WebSocketServer({
         const empleadoId = empleadoDelToken(token);
 
         if (empleadoId === null) {
-            registrar('token_invalido', { ip, origin });
+            registrar('token_invalido', { red, origin });
             return aceptar(false, 401, 'Token inválido o vencido');
         }
 

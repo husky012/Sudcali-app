@@ -2,9 +2,10 @@
 // (como /empleados) nunca se almacenan: siempre se piden al servidor, que
 // comprueba la sesión. Al cambiar la versión se borra la caché anterior (v2),
 // que sí contenía /empleados.
-const CACHE_NAME = 'sudcali-v3';
+const CACHE_NAME = 'sudcali-v4';
 const ASSETS_TO_CACHE = [
-    '/js/empleados-db.js'
+    '/js/empleados-db.js',
+    '/js/empleados.js'
 ];
 
 self.addEventListener('install', (event) => {

@@ -91,7 +91,7 @@
                                 <a href="{{ route('pos.admin.empleados.edit', $empleado) }}">Editar</a>
                                 @unless ($empleado->is(auth('empleado')->user()))
                                     <form method="POST" action="{{ route('pos.admin.empleados.destroy', $empleado) }}"
-                                          onsubmit="return confirm('¿Eliminar a {{ addslashes($empleado->nombreCompleto()) }}? Si ya tiene ventas solo se dará de baja.')">
+                                          data-confirmar="¿Eliminar a {{ $empleado->nombreCompleto() }}? Si ya tiene ventas solo se dará de baja.">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="boton-peligro-texto-pos">Eliminar</button>

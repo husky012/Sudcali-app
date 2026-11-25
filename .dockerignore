@@ -1,0 +1,22 @@
+# Nada de esto entra a la imagen: secretos, datos locales y lo que se instala dentro.
+.git
+.github
+.agents
+.claude
+.env
+.env.*
+node_modules
+vendor
+docs
+tests
+public/build
+public/hot
+public/storage
+bootstrap/cache/*.php
+database/*.sqlite*
+storage/app/private/*
+storage/app/public/*
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*

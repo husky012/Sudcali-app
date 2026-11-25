@@ -52,9 +52,25 @@ Esto asegura que el sistema responda al 100% ante caídas de internet o falta de
 
 ---
 
+> **Actualización (Práctica 6):** lo anterior describe la entrega de la Práctica 4. Desde la Práctica 6 la caché es `sudcali-v4` y solo guarda archivos JavaScript públicos. La página `/empleados` ya no se guarda porque es privada, así que abrirla exige conexión; con la página abierta, el catálogo sigue trabajando sobre IndexedDB.
+
+---
+
 ## 4. Declaración del Uso de Inteligencia Artificial (IA)
 
 De acuerdo con las reglas de la práctica, se declara la asistencia del modelo de inteligencia artificial **Gemini (Google)** para los siguientes puntos específicos:
 * **Generación y estructuración de código:** Asistencia en el manejo de promesas asíncronas nativas de IndexedDB (`indexedDB.open`, `onupgradeneeded` para la migración de versión 1 a versión 2) y en la sintaxis de renderizado 2D con la API de `<canvas>` para la gráfica de barras dinámicas.
 * **Resolución de errores y depuración:** Asistencia en la configuración del túnel de Cloudflare (`cloudflared`) mediante el protocolo `--protocol http2` y el ajuste de dependencias ES Modules (`ws`) para el servidor de sockets en tiempo real.
 * **Justificación y explicación:** La capacidad de explicar, justificar y depurar en vivo cada línea del código frente al docente fue comprendida, verificada y validada en su totalidad por los miembros del equipo.
+
+---
+
+## 5. Declaración del uso de IA: Prácticas 5 y 6, Tareas 4 y 5 y documentación final
+
+Se declara el uso de **Claude (Anthropic), mediante Claude Code**, del 23 al 25 de noviembre de 2026, para:
+
+* **Revisión:** comparar el código con el material «Mecanismos de seguridad y certificados» y encontrar lo que faltaba.
+* **Código:** mover los scripts en línea a `public/js`, CSP sin `unsafe-inline`, cabeceras globales, redirección a HTTPS y proxies de confianza, archivos en disco privado, bitácora con huellas y las pruebas automáticas correspondientes.
+* **Configuración:** `Dockerfile`, `compose.yml`, `compose.https.yml`, los archivos de Nginx en `docs/servidor`, la ruta `/salud` y el programa de mediciones `medir.mjs`. También ejecutó el montaje en Docker, las mediciones con Apache Bench y las capturas, y redactó la conclusión de `practica5.md` con esos números.
+* **Documentos:** redacción de `practica6.md`, `superficies.md`, las Tareas 4 y 5 y la documentación final (modelo de datos, diagramas, manuales de instalación y de usuario, y bitácora de aportaciones a partir de `git log`), a partir del código del proyecto y de las fuentes citadas.
+* **Pruebas visuales:** recorrido de las vistas y capturas con Microsoft Edge.

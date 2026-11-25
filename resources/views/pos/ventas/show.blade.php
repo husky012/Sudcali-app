@@ -64,15 +64,10 @@
 
     <div class="acciones-pos no-imprimir">
         <a href="{{ route('pos.ventas.create') }}" class="boton-login boton-enlace-pos" autofocus>Nueva venta</a>
-        <button type="button" class="boton-secundario-pos boton-ancho-pos" onclick="window.print()">Imprimir ticket</button>
+        @if (session('exito'))
+            <span data-ticket-cobrado hidden></span>
+        @endif
+        <button type="button" class="boton-secundario-pos boton-ancho-pos" data-imprimir>Imprimir ticket</button>
     </div>
 </section>
 @endsection
-
-@if (session('exito'))
-    @push('scripts')
-    <script>
-        try { sessionStorage.removeItem('sudcali-pos-ticket'); } catch (e) {}
-    </script>
-    @endpush
-@endif

@@ -2,6 +2,7 @@
 
 use App\Actions\PuntoVenta\FirmarTokenWebSocket;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SaludController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\AsegurarPermisoPuesto;
 use App\Http\Middleware\EnsureTeamMembership;
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 // La aplicación siempre arranca en el login del punto de venta
 // (si el empleado ya tiene sesión, el login lo manda directo a vender).
 Route::redirect('/', '/pos/login');
+
+// Salud del nodo para el balanceador (Práctica 5): sin sesión ni cookies.
+Route::get('/salud', SaludController::class)->withoutMiddleware('web')->name('salud');
 
 // Catálogo de Personal (IndexedDB + WebSocket): solo gerencia y administración.
 Route::get('/empleados', function (FirmarTokenWebSocket $firmarToken) {

@@ -4,11 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Vite;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Cabeceras de seguridad para todas las respuestas web (OWASP A02).
+ * Cabeceras de seguridad para todas las respuestas, incluidas las de error (OWASP A02).
  */
 class CabecerasSeguridad
 {
@@ -32,14 +31,10 @@ class CabecerasSeguridad
             'Cross-Origin-Opener-Policy' => 'same-origin',
         ]);
 
-        // Con el servidor de desarrollo de Vite los scripts vienen de otro puerto;
-        // la política solo se aplica con los archivos compilados (producción).
-        if (! Vite::isRunningHot()) {
-            $response->headers->set('Content-Security-Policy', $this->politicaDeContenido($request));
-        }
+        $response->headers->set('Content-Security-Policy', $this->politicaDeContenido($request));
 
         if ($request->isSecure()) {
-            $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+            $response->headers->set('Strict-Transport-Security', 'max-age='.config('services.hsts.max_age').'; includeSubDomains');
         }
 
         return $response;
@@ -47,18 +42,24 @@ class CabecerasSeguridad
 
     /**
      * Content-Security-Policy: solo recursos propios, sin iframes ni plugins.
+     *
+     * Los scripts escritos dentro del HTML no se ejecutan: script-src no lleva 'unsafe-inline'.
+     * Con el servidor de desarrollo de Vite (npm run dev) se permite además su puerto.
      */
     protected function politicaDeContenido(Request $request): string
     {
         $websocket = config('services.websocket.url');
 
+        $vite = ! app()->isProduction() && is_file(public_path('hot')) ? ' http:' : '';
+        $viteSocket = $vite === '' ? '' : ' http: ws:';
+
         $directivas = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline'",
-            "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
-            "font-src 'self' data: https://fonts.bunny.net",
-            "img-src 'self' data: blob: https:",
-            trim("connect-src 'self' ".($websocket ?? '')),
+            "script-src 'self'{$vite}",
+            "style-src 'self' 'unsafe-inline'{$vite}",
+            "font-src 'self' data:{$vite}",
+            "img-src 'self' data: blob:{$vite}",
+            rtrim("connect-src 'self' ".($websocket ?? '')).$viteSocket,
             "worker-src 'self'",
             "object-src 'none'",
             "base-uri 'self'",

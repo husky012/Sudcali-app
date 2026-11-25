@@ -1,0 +1,55 @@
+ Container sudcali-ab-run-c8548ef8bfdf Creating 
+ Container sudcali-ab-run-c8548ef8bfdf Created 
+This is ApacheBench, Version 2.3 <$Revision$>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.28.0.10 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        nginx
+Server Hostname:        172.28.0.10
+Server Port:            80
+
+Document Path:          /tienda
+Document Length:        Variable
+
+Concurrency Level:      20
+Time taken for tests:   3.016 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      19427007 bytes
+HTML transferred:       17675007 bytes
+Requests per second:    331.52 [#/sec] (mean)
+Time per request:       60.329 [ms] (mean)
+Time per request:       3.016 [ms] (mean, across all concurrent requests)
+Transfer rate:          6289.42 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       3
+Processing:    26   59  17.9     64     129
+Waiting:       25   57  17.9     63     128
+Total:         26   59  17.9     64     130
+
+Percentage of the requests served within a certain time (ms)
+  50%     64
+  66%     68
+  75%     71
+  80%     74
+  90%     79
+  95%     83
+  98%     89
+  99%     94
+ 100%    130 (longest request)
