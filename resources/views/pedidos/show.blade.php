@@ -32,7 +32,31 @@
         </ol>
     @endif
 
-    <div class="contenedor-grid-carrito">
+    @if ($estadoActual === 'enviado')
+        <section class="panel-mapa" aria-labelledby="tituloMapa">
+            <h3 id="tituloMapa">¿Dónde viene mi pedido?</h3>
+            <div id="mapaPedido" class="mapa-sudcali" role="img" aria-label="Mapa con la ubicación de tu pedido" hidden></div>
+            <p id="avisoMapa" class="aviso-mapa" role="status">Buscando la ubicación…</p>
+        </section>
+    @elseif ($estadoActual === 'entregado' && $pedido->entrega?->foto)
+        <section class="panel-mapa">
+            <h3>Tu pedido se entregó el {{ $pedido->entrega->entregado_en->format('d/m/Y \a \l\a\s H:i') }}</h3>
+            <img src="{{ route('pedidos.foto', $pedido) }}" alt="Foto de la entrega de tu pedido" class="foto-entrega">
+        </section>
+    @endif
+
+    @if ($pedido->direccionEnvio && ! in_array($estadoActual, ['entregado', 'cancelado'], true))
+        <section class="panel-mapa" data-domicilio="{{ route('pedidos.domicilio', $pedido) }}" data-token="{{ csrf_token() }}"
+             data-latitud="{{ $pedido->direccionEnvio->latitud }}" data-longitud="{{ $pedido->direccionEnvio->longitud }}">
+            <h3>Mi domicilio en el mapa</h3>
+            <div class="mapa-sudcali" role="application" aria-label="Mapa para marcar el domicilio" hidden></div>
+            <p class="aviso-mapa" role="status">{{ $pedido->direccionEnvio->coordenadas() ? 'Ya está marcado: con él se traza el camino de tu pedido.' : 'Márcalo para ver el camino que falta hasta tu casa.' }}</p>
+            <button type="button" class="boton-secundario-pos" data-abrir>{{ $pedido->direccionEnvio->coordenadas() ? 'Cambiar el punto' : 'Marcar en el mapa' }}</button>
+            <button type="button" class="boton-secundario-pos" data-guardar hidden>Guardar domicilio</button>
+        </section>
+    @endif
+
+    <div class="contenedor-grid-carrito" id="seguimientoPedido" data-estado="{{ $estadoActual }}" data-url="{{ route('pedidos.seguimiento', $pedido) }}">
         <div class="lista-items-carrito">
             @foreach ($pedido->detalles as $detalle)
                 <article class="tarjeta-item-carrito">
@@ -70,3 +94,10 @@
     </div>
 </section>
 @endsection
+
+@unless (in_array($estadoActual, ['entregado', 'cancelado'], true))
+    @push('scripts')
+        <script src="{{ asset('js/mapa.js') }}" defer></script>
+        <script src="{{ asset('js/seguimiento-pedido.js') }}" defer></script>
+    @endpush
+@endunless

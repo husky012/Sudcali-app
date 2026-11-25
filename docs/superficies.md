@@ -18,7 +18,7 @@ Sudcali es una tienda en línea con punto de venta (POS) para ropa local de La P
   - `POST` con `inventario_id` y `cantidad`;
   - `PATCH` y `DELETE /carrito/{variante}`.
 - `POST /checkout`: dirección guardada o nueva (calle, colonia, C.P., referencias) y método de pago.
-- `/mis-pedidos/{pedido}`: identificador numérico del pedido.
+- `/mis-pedidos/{pedido}`: identificador numérico del pedido. También `/seguimiento` (estado, ubicación y camino), `/domicilio` (latitud y longitud) y `/foto-entrega`.
 
 **Punto de venta (solo empleados)**
 - `POST /pos/caja` y `PUT /pos/caja`: fondo inicial y efectivo contado al cerrar caja.
@@ -30,7 +30,8 @@ Sudcali es una tienda en línea con punto de venta (POS) para ropa local de La P
   - categorías y productos, con imagen;
   - variantes (talla, color, código de barras);
   - ajustes de inventario;
-  - estado de pedidos en línea.
+  - estado de pedidos en línea;
+  - reparto: latitud y longitud de quien lleva el pedido, y foto de la entrega.
 - `/pos/admin/estadisticas` y `/exportar/{reporte}`: periodo, fechas, canal y tipo de reporte.
 - `/empleados`: catálogo de personal en IndexedDB:
   - formulario con fotografía;
@@ -65,7 +66,9 @@ Sudcali es una tienda en línea con punto de venta (POS) para ropa local de La P
 | `/producto/{slug}` | A01 | Solo productos visibles; si no, 404 |
 | `/carrito` | A08 | Cantidad y variante validadas; el precio sale de la base |
 | `POST /checkout` | A01, A06, A08 | La dirección debe ser del cliente; C.P. de B.C.S.; totales y existencias en el servidor, con bloqueo |
-| `/mis-pedidos/{pedido}` | A01 | Se compara con el cliente en sesión: 404 y bitácora |
+| `/mis-pedidos/{pedido}`, `/seguimiento`, `/domicilio` y `/foto-entrega` | A01 | Se compara con el cliente en sesión: 404 y bitácora |
+| Respuesta del servicio de rutas (OSRM) | A08 | Dato externo no confiable: solo se aceptan coordenadas numéricas, con límite de tiempo; si falla se dibuja una línea recta. Se le envían dos puntos, sin datos del cliente |
+| `/pos/admin/pedidos/{pedido}/reparto`, `/ubicacion`, `/entrega` y `/foto` | A01, A05 | Permiso por puesto; coordenadas validadas y solo con el pedido en camino; foto validada por contenido, en disco privado. La ubicación se borra al entregar. Cámara y ubicación permitidas solo en esa pantalla (`Permissions-Policy`) |
 | `/pos/caja`, `/pos/cortes/{corte}` | A01, A06 | Sesión de empleado, solo cortes de su sucursal y montos validados |
 | `POST /pos/ventas`, `/pos/inventario` | A06, A08 | Caja abierta, existencias con bloqueo, precio de la base y efectivo suficiente |
 | `/pos/ventas/{venta}` | A01 | El ticket debe ser de la sucursal del empleado |

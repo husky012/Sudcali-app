@@ -4,7 +4,7 @@ Equipo: Jorge Eduardo Alvarez Aviles, Logan Ransseth Rios Manriquez, Omar Albert
 
 Lista de verificación de las 14 medidas. Parte de [superficies.md](superficies.md). La razón de cada decisión está en la [Tarea 5](Tarea5_Propuesta_Integral_de_Seguridad.pdf) y el procedimiento de HTTPS en la [Tarea 4](Tarea4_Firma_Certificados_HTTPS.pdf).
 
-**Pruebas (24 de noviembre de 2026):** `SeguridadTest` 35 de 35, `AdministracionPosTest` 42 de 42, `TiendaEnLineaTest` 22 de 22, `PuntoVentaTest` 22 de 22. En total, 202 de 219 pasan, 8 se omiten (funciones apagadas) y 9 fallan. Esas 9 son de páginas del kit de inicio de Laravel que Sudcali no usa.
+**Pruebas (25 de noviembre de 2026):** `SeguridadTest` 35 de 35, `AdministracionPosTest` 42 de 42, `TiendaEnLineaTest` 22 de 22, `PuntoVentaTest` 22 de 22, `EntregaTest` 36 de 36. En total, 238 de 255 pasan, 8 se omiten (funciones apagadas) y 9 fallan. Esas 9 son de páginas del kit de inicio de Laravel que Sudcali no usa.
 
 ## Lista de verificación
 
@@ -20,7 +20,7 @@ Lista de verificación de las 14 medidas. Parte de [superficies.md](superficies.
 | 6 | Consultas parametrizadas | Eloquent en toda la aplicación | `SeguridadTest`: «a sql injection in the search…» | ✅ |
 | 7 | Validación en el servidor y salida codificada | `app/Http/Requests`, `{{ }}`, `textContent` en `empleados.js` | `SeguridadTest`: «a search with a script is shown as text» | ✅ [Búsqueda](capturas/07-xss-busqueda.png), [nombre de empleado](capturas/practica6/xss-empleados.jpg) |
 | 8 | Control de acceso | `PedidoController::show`, `AsegurarPermisoPuesto`, guards separados | `TiendaEnLineaTest`: «customers see their own orders…»; `SeguridadTest`: «only managers…» | ✅ [Captura](capturas/08-empleados-sin-sesion.png) |
-| 9 | Subida de archivos segura | `GuardarEmpleadoRequest`, `GuardarProductoRequest`, `EmpleadoController::foto`, `ImagenProductoController` | `AdministracionPosTest`: «a program disguised as an image is rejected», «employee photos are only served…» | ✅ |
+| 9 | Subida de archivos segura | `GuardarEmpleadoRequest`, `GuardarProductoRequest`, `EmpleadoController::foto`, `ImagenProductoController` | `AdministracionPosTest`: «a program disguised as an image is rejected», «employee photos are only served…»; `EntregaTest`: foto de la entrega | ✅ |
 | 10 | Bitácora sin contraseñas ni datos personales | `BitacoraSeguridad`, `RegistrarEventoSeguridad`, `server-socket.js` | `SeguridadTest`: «failed logins are logged without the password or personal data» | ✅ Ver muestra abajo |
 | **Servidor** | | | | |
 | 11 | HTTPS con redirección | `ForzarHttps`, `config/trustedproxy.php`, [compose.https.yml](../compose.https.yml), [nginx-sudcali.conf](servidor/nginx-sudcali.conf) | `SeguridadTest`: «in production http requests are redirected to https», «the trusted balancer…», «nobody else can pretend…» | ✅ Probado en Docker: [redirección y HSTS](capturas/practica5/https.png), [TLS](capturas/practica5/tls.png) |

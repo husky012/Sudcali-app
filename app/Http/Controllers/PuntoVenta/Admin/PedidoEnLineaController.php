@@ -26,7 +26,7 @@ class PedidoEnLineaController extends Controller
 
         $pedidos = Venta::query()
             ->where('origen', OrigenVenta::EnLinea)
-            ->with(['cliente', 'direccionEnvio', 'detalles.inventario.producto'])
+            ->with(['cliente', 'direccionEnvio', 'detalles.inventario.producto', 'entrega'])
             ->when($filtros['estado'] ?? null, fn (Builder $consulta, string $estado) => $consulta->where('estado_envio', $estado))
             ->orderByRaw("case when estado_envio in ('pendiente', 'preparando', 'enviado') then 0 else 1 end")
             ->latest()

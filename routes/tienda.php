@@ -41,4 +41,7 @@ Route::middleware('auth:cliente')->group(function () {
 
     Route::get('/mis-pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
     Route::get('/mis-pedidos/{pedido}', [PedidoController::class, 'show'])->name('pedidos.show');
+    Route::get('/mis-pedidos/{pedido}/seguimiento', [PedidoController::class, 'seguimiento'])->name('pedidos.seguimiento');
+    Route::put('/mis-pedidos/{pedido}/domicilio', [PedidoController::class, 'domicilio'])->name('pedidos.domicilio');
+    Route::get('/mis-pedidos/{pedido}/foto-entrega', [PedidoController::class, 'foto'])->name('pedidos.foto');
 });

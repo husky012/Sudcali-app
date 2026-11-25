@@ -11,6 +11,7 @@ class ActualizarEstadoPedido
 {
     /**
      * Avanza o cancela un pedido en línea. Al cancelar, regresa las piezas al inventario.
+     * Cuando deja de ir en camino se borra la ubicación de quien lo llevaba.
      *
      * @throws ValidationException
      */
@@ -32,6 +33,10 @@ class ActualizarEstadoPedido
             }
 
             $pedido->update(['estado_envio' => $nuevoEstado]);
+
+            if ($nuevoEstado !== EstadoEnvio::Enviado) {
+                $pedido->entrega?->olvidarUbicacion();
+            }
 
             return $pedido;
         });

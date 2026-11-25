@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -35,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @property-read CorteCaja|null $corteCaja
  * @property-read DireccionCliente|null $direccionEnvio
  * @property-read Collection<int, DetalleVenta> $detalles
+ * @property-read Entrega|null $entrega
  */
 #[Fillable(['origen', 'empleado_id', 'cliente_id', 'corte_caja_id', 'direccion_envio_id', 'subtotal', 'costo_envio', 'total', 'metodo_pago', 'estado_envio'])]
 class Venta extends Model
@@ -80,6 +82,14 @@ class Venta extends Model
     public function detalles(): HasMany
     {
         return $this->hasMany(DetalleVenta::class);
+    }
+
+    /**
+     * @return HasOne<Entrega, $this>
+     */
+    public function entrega(): HasOne
+    {
+        return $this->hasOne(Entrega::class);
     }
 
     /**

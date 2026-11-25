@@ -20,13 +20,15 @@ use Illuminate\Support\Carbon;
  * @property string $ciudad
  * @property string $estado
  * @property string|null $referencias
+ * @property string|null $latitud Punto que marcó el cliente en el mapa.
+ * @property string|null $longitud
  * @property bool $es_principal
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Cliente $cliente
  * @property-read Collection<int, Venta> $ventas
  */
-#[Fillable(['cliente_id', 'calle_numero', 'colonia', 'codigo_postal', 'ciudad', 'estado', 'referencias', 'es_principal'])]
+#[Fillable(['cliente_id', 'calle_numero', 'colonia', 'codigo_postal', 'ciudad', 'estado', 'referencias', 'latitud', 'longitud', 'es_principal'])]
 class DireccionCliente extends Model
 {
     /** @use HasFactory<DireccionClienteFactory> */
@@ -51,6 +53,18 @@ class DireccionCliente extends Model
     }
 
     /**
+     * Punto del domicilio en el mapa, o null si nadie lo ha marcado.
+     *
+     * @return array{float, float}|null
+     */
+    public function coordenadas(): ?array
+    {
+        return $this->latitud === null || $this->longitud === null
+            ? null
+            : [(float) $this->latitud, (float) $this->longitud];
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -58,6 +72,8 @@ class DireccionCliente extends Model
     protected function casts(): array
     {
         return [
+            'latitud' => 'decimal:7',
+            'longitud' => 'decimal:7',
             'es_principal' => 'boolean',
         ];
     }

@@ -71,6 +71,7 @@ Se declara el uso de **Claude (Anthropic), mediante Claude Code**, del 23 al 25 
 
 * **Revisión:** comparar el código con el material «Mecanismos de seguridad y certificados» y encontrar lo que faltaba.
 * **Código:** mover los scripts en línea a `public/js`, CSP sin `unsafe-inline`, cabeceras globales, redirección a HTTPS y proxies de confianza, archivos en disco privado, bitácora con huellas y las pruebas automáticas correspondientes.
+* **Mapa y foto de entrega:** tabla `entregas`, pantalla de reparto, mapa en JavaScript, camino al domicilio, cámara y `EntregaTest`.
 * **Configuración:** `Dockerfile`, `compose.yml`, `compose.https.yml`, los archivos de Nginx en `docs/servidor`, la ruta `/salud` y el programa de mediciones `medir.mjs`. También ejecutó el montaje en Docker, las mediciones con Apache Bench y las capturas, y redactó la conclusión de `practica5.md` con esos números.
 * **Documentos:** redacción de `practica6.md`, `superficies.md`, las Tareas 4 y 5 y la documentación final (modelo de datos, diagramas, manuales de instalación y de usuario, y bitácora de aportaciones a partir de `git log`), a partir del código del proyecto y de las fuentes citadas.
 * **Pruebas visuales:** recorrido de las vistas y capturas con Microsoft Edge.

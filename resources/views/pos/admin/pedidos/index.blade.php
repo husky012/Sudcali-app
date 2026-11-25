@@ -6,7 +6,7 @@
     $siguientes = [
         'pendiente' => ['preparando' => 'Marcar en preparación', 'cancelado' => 'Cancelar'],
         'preparando' => ['enviado' => 'Marcar como enviado', 'cancelado' => 'Cancelar'],
-        'enviado' => ['entregado' => 'Marcar como entregado'],
+        'enviado' => ['entregado' => 'Marcar como entregado sin foto'],
         'entregado' => [],
         'cancelado' => [],
     ];
@@ -88,6 +88,9 @@
 
                     @if ($siguientes[$pedido->estado_envio->value] !== [])
                         <footer class="acciones-pedido-pos">
+                            @if ($pedido->estado_envio->value === 'enviado')
+                                <a href="{{ route('pos.admin.pedidos.reparto', $pedido) }}" class="boton-secundario-pos boton-enlace-pos">Repartir: mapa y foto</a>
+                            @endif
                             @foreach ($siguientes[$pedido->estado_envio->value] as $estado => $etiqueta)
                                 <form method="POST" action="{{ route('pos.admin.pedidos.update', $pedido) }}"
                                       @if ($estado === 'cancelado') data-confirmar="¿Cancelar el pedido #{{ $pedido->id }}? Las piezas regresarán al inventario." @endif>
@@ -97,6 +100,12 @@
                                     <button type="submit" @class(['boton-secundario-pos', 'boton-peligro-pos' => $estado === 'cancelado'])>{{ $etiqueta }}</button>
                                 </form>
                             @endforeach
+                        </footer>
+                    @elseif ($pedido->entrega?->foto)
+                        <footer class="acciones-pedido-pos">
+                            <button type="button" class="boton-secundario-pos"
+                                    data-ampliar="{{ route('pos.admin.pedidos.foto', $pedido) }}"
+                                    data-titulo="Entrega del pedido #{{ $pedido->id }} · {{ $pedido->entrega->entregado_en->format('d/m/Y H:i') }}">Ver foto de entrega</button>
                         </footer>
                     @endif
                 </article>

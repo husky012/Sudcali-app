@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PuntoVenta\Admin\CategoriaController;
 use App\Http\Controllers\PuntoVenta\Admin\EmpleadoController;
+use App\Http\Controllers\PuntoVenta\Admin\EntregaController;
 use App\Http\Controllers\PuntoVenta\Admin\EstadisticaController;
 use App\Http\Controllers\PuntoVenta\Admin\InventarioController;
 use App\Http\Controllers\PuntoVenta\Admin\PedidoEnLineaController;
@@ -70,6 +71,14 @@ Route::prefix('pos')->name('pos.')->group(function () {
 
                 Route::get('pedidos', [PedidoEnLineaController::class, 'index'])->name('pedidos.index');
                 Route::patch('pedidos/{pedido}', [PedidoEnLineaController::class, 'update'])->name('pedidos.update');
+
+                // Reparto: ubicación en vivo y foto de la entrega.
+                Route::get('pedidos/{pedido}/reparto', [EntregaController::class, 'show'])->name('pedidos.reparto');
+                Route::put('pedidos/{pedido}/ubicacion', [EntregaController::class, 'ubicacion'])->middleware('throttle:120,1')->name('pedidos.ubicacion');
+                Route::delete('pedidos/{pedido}/ubicacion', [EntregaController::class, 'olvidarUbicacion'])->name('pedidos.ubicacion.olvidar');
+                Route::put('pedidos/{pedido}/domicilio', [EntregaController::class, 'domicilio'])->name('pedidos.domicilio');
+                Route::post('pedidos/{pedido}/entrega', [EntregaController::class, 'store'])->name('pedidos.entrega');
+                Route::get('pedidos/{pedido}/foto', [EntregaController::class, 'foto'])->name('pedidos.foto');
             });
         });
     });

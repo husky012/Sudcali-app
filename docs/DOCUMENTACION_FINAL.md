@@ -5,6 +5,7 @@ El documento final está en [Sudcali_Documentacion_Final.docx](Sudcali_Documenta
 | Entregable | Archivo |
 | --- | --- |
 | Modelo de datos, diagrama de despliegue, manuales de instalación y de usuario, y bitácora de aportaciones | Capítulos del documento final; imágenes en [diagramas/](diagramas/) |
+| Bitácora de aportaciones | [bitacora.md](bitacora.md) |
 | Fundamentación del proyecto | [Sudcali.pdf](Sudcali.pdf) |
 | Práctica 4. Catálogo de personal y declaración de uso de IA | [LEEME.md](LEEME.md) |
 | Práctica 5. Balanceo de carga y mediciones | [practica5.md](practica5.md), [balanceoCarga.md](balanceoCarga.md) |

@@ -2720,9 +2720,217 @@ a.boton-finalizar-compra {
     padding-top: 0.9rem;
 }
 
+.acciones-pedido-pos .boton-secundario-pos {
+    font-size: 0.85rem;
+}
+
+.acciones-pedido-pos .boton-secundario-pos:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .boton-peligro-pos {
     color: #f87171;
     border-color: rgba(239, 68, 68, 0.45);
+}
+
+/* Mapa del pedido, reparto y foto de la entrega */
+.mapa-sudcali {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    height: 340px;
+    border-radius: 8px;
+    border: 1px solid var(--color-borde-oscuro);
+    background-color: var(--color-fondo-superficie);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+
+.mapa-sudcali[hidden] {
+    display: none;
+}
+
+.mosaico-mapa,
+.marcador-mapa,
+.precision-mapa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.mosaico-mapa {
+    width: 256px;
+    height: 256px;
+    max-width: none;
+}
+
+.camino-mapa {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.borde-camino {
+    stroke: #ffffff;
+    stroke-width: 9;
+}
+
+.linea-camino {
+    stroke: #2563eb;
+    stroke-width: 5;
+}
+
+.camino-aproximado .linea-camino {
+    stroke-dasharray: 2 10;
+}
+
+.camino-aproximado .borde-camino {
+    stroke: none;
+}
+
+.casa-mapa,
+.mira-mapa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.casa-mapa::before,
+.mira-mapa::before {
+    content: '🏠';
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 3px solid #dc2626;
+    background-color: #ffffff;
+    font-size: 17px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.mira-mapa {
+    top: 50%;
+    left: 50%;
+}
+
+.mapa-elegir .controles-mapa button:last-child {
+    display: none;
+}
+
+.marcador-mapa[hidden],
+.casa-mapa[hidden],
+.precision-mapa[hidden] {
+    display: none;
+}
+
+.precision-mapa {
+    border-radius: 50%;
+    background-color: rgba(59, 130, 246, 0.18);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+}
+
+.marcador-mapa::before {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: #2563eb;
+    border: 3px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.controles-mapa {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    gap: 6px;
+}
+
+.controles-mapa button {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #0a0a0a;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.credito-mapa {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 2px 6px;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #0a0a0a;
+    font-size: 0.7rem;
+}
+
+.panel-mapa {
+    margin-bottom: 2rem;
+}
+
+.panel-mapa h3 {
+    margin-bottom: 0.75rem;
+}
+
+.aviso-mapa {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-texto-secundario);
+}
+
+.foto-entrega {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: var(--color-fondo-superficie);
+}
+
+.foto-entrega[hidden] {
+    display: none;
+}
+
+.paneles-reparto {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+@media (min-width: 900px) {
+    .paneles-reparto {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+}
+
+.acciones-camara {
+    justify-content: flex-start;
+    border-top: 0;
+    padding-top: 0;
 }
 
 /* ==========================================================================

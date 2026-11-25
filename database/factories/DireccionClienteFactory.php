@@ -31,6 +31,14 @@ class DireccionClienteFactory extends Factory
     }
 
     /**
+     * Indicate that the customer marked the address on the map.
+     */
+    public function ubicada(float $latitud = 24.1265, float $longitud = -110.3085): static
+    {
+        return $this->state(['latitud' => $latitud, 'longitud' => $longitud]);
+    }
+
+    /**
      * Indicate that this is the customer's default address.
      */
     public function principal(): static

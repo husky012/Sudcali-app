@@ -53,7 +53,7 @@ Solo el balanceador tiene puerto hacia el equipo. Los nodos y la base no se alca
 - **Nodos por IP, no por nombre:** Nginx no arranca si el nombre de un contenedor apagado no se puede resolver.
 - **Cuatro procesos por nodo** (`PHP_CLI_SERVER_WORKERS=4`), porque `artisan serve` atiende una petición a la vez por proceso.
 
-**Pruebas:** `SaludTest`, 5 de 5. La suite completa se corrió también sobre MySQL 8.0 con el mismo resultado que en SQLite: de 219 pasan 202, 8 se omiten y 9 fallan (kit de inicio, no se usa).
+**Pruebas:** `SaludTest`, 5 de 5. La suite completa se corrió también sobre MySQL 8.0 con el mismo resultado que en SQLite: de 219 pasaban 202, 8 se omiten y 9 fallan (kit de inicio, no se usa). Con `EntregaTest` (mapa, camino y foto de entrega) son 238 de 255 en SQLite.
 
 ## Cómo levantarlo
 

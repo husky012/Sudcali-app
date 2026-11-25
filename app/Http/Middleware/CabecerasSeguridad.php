@@ -27,7 +27,7 @@ class CabecerasSeguridad
             'X-Content-Type-Options' => 'nosniff',
             'X-Frame-Options' => 'DENY',
             'Referrer-Policy' => 'strict-origin-when-cross-origin',
-            'Permissions-Policy' => 'camera=(), microphone=(), geolocation=(), payment=()',
+            'Permissions-Policy' => $this->politicaDePermisos($request),
             'Cross-Origin-Opener-Policy' => 'same-origin',
         ]);
 
@@ -41,9 +41,20 @@ class CabecerasSeguridad
     }
 
     /**
+     * La cámara y la ubicación solo se pueden pedir en la pantalla de reparto.
+     */
+    protected function politicaDePermisos(Request $request): string
+    {
+        $reparto = $request->routeIs('pos.admin.pedidos.reparto') ? '(self)' : '()';
+
+        return "camera={$reparto}, microphone=(), geolocation={$reparto}, payment=()";
+    }
+
+    /**
      * Content-Security-Policy: solo recursos propios, sin iframes ni plugins.
      *
      * Los scripts escritos dentro del HTML no se ejecutan: script-src no lleva 'unsafe-inline'.
+     * Las imágenes del mapa (OpenStreetMap) solo se permiten en las páginas que lo muestran.
      * Con el servidor de desarrollo de Vite (npm run dev) se permite además su puerto.
      */
     protected function politicaDeContenido(Request $request): string
@@ -53,12 +64,14 @@ class CabecerasSeguridad
         $vite = ! app()->isProduction() && is_file(public_path('hot')) ? ' http:' : '';
         $viteSocket = $vite === '' ? '' : ' http: ws:';
 
+        $mapa = $request->routeIs('pos.admin.pedidos.reparto', 'pedidos.show') ? ' https://tile.openstreetmap.org' : '';
+
         $directivas = [
             "default-src 'self'",
             "script-src 'self'{$vite}",
             "style-src 'self' 'unsafe-inline'{$vite}",
             "font-src 'self' data:{$vite}",
-            "img-src 'self' data: blob:{$vite}",
+            "img-src 'self' data: blob:{$mapa}{$vite}",
             rtrim("connect-src 'self' ".($websocket ?? '')).$viteSocket,
             "worker-src 'self'",
             "object-src 'none'",

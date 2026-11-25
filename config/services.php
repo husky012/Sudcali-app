@@ -38,6 +38,11 @@ return [
         'password' => env('DEMO_PASSWORD'),
     ],
 
+    // Servicio OSRM que traza el camino al domicilio. Vacío: se dibuja una línea recta.
+    'rutas' => [
+        'url' => env('RUTAS_URL', 'https://router.project-osrm.org'),
+    ],
+
     // Nombre del nodo detrás del balanceador (Práctica 5). Vacío: no se anuncia.
     'nodo' => env('NODO'),
 
